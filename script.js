@@ -372,7 +372,7 @@ async function saveResult(time, err) {
     });
 }
 
-// ||||||||||||||||||||||||||||||||||||||||||||||||
+// |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {
     const modal = document.getElementById('custom-modal');
     const msgArea = document.getElementById('modal-message');

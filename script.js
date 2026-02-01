@@ -300,6 +300,7 @@ function checkClear() {     // ***** done / not yet
         if (isNewRecord) {
             playSound('new-record');
             allCells.forEach(cell => cell.classList.add('rainbow'));
+            document.getElementById('best-time').innerText = finalTime;     // update bestTime in the screen
         } else {
             playSound('clear');
             allCells.forEach(cell => cell.classList.add('clear-flash'));
@@ -398,8 +399,15 @@ function closeModal() {
 }
 
 function restartGame() {
-    closeModal();
-    startGameLogic(); // もう一度最初から
+    // 1. さっき出した記録（finalTime）が新記録なら、画面の表示を更新する
+    const currentTimeStr = document.getElementById('timer').innerText;
+    const bestTimeStr = document.getElementById('best-time').innerText;
+
+    if (checkNewRecord(currentTimeStr)) {
+        document.getElementById('best-time').innerText = currentTimeStr;
+    }
+    closeModal();       // close the modal
+    startGameLogic();   // re-start the game from the beginning
 }
 
 function backToSetup() {

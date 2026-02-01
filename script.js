@@ -265,23 +265,26 @@ function onCellClick(cell) {
         const sum = parseInt(firstCell.innerText) + parseInt(cell.innerText);
         const f = firstCell; const c = cell;
         if (sum === 10) {
+            f.onclick = null;         // make the cell unavailable
+            c.onclick = null;         // to avoid too many yellow cells
             playSound('correct');
-            f.classList.add('correct-flash'); c.classList.add('correct-flash');
-            setTimeout(() => {
+        //     f.classList.add('correct-flash'); c.classList.add('correct-flash');
+        //     setTimeout(() => {
                 document.querySelectorAll('.cell.latest').forEach(el => {
                     el.classList.replace('latest', 'hidden');
                 });
-                f.classList.remove('correct-flash', 'selected');
-                c.classList.remove('correct-flash', 'selected');
+        //         f.classList.remove('correct-flash', 'selected');
+        //         c.classList.remove('correct-flash', 'selected');
+                f.classList.remove('selected'); c.classList.remove('selected');
                 f.classList.add('latest'); c.classList.add('latest');
                 checkClear();
-            }, 3000);
-        } else {
-            errors++;
-            document.getElementById('error-count').innerText = errors;
-            playSound('wrong');
-            f.classList.add('wrong-flash'); c.classList.add('wrong-flash');
-            setTimeout(() => { f.classList.remove('wrong-flash', 'selected'); c.classList.remove('wrong-flash', 'selected'); }, 3000);
+        //     }, 3000);
+        // } else {
+        //     errors++;
+        //     document.getElementById('error-count').innerText = errors;
+        //     playSound('wrong');
+        //     f.classList.add('wrong-flash'); c.classList.add('wrong-flash');
+        //     setTimeout(() => { f.classList.remove('wrong-flash', 'selected'); c.classList.remove('wrong-flash', 'selected'); }, 3000);
         }
         firstCell = null;
     }
@@ -293,31 +296,29 @@ function checkClear() {     // ***** done / not yet
     if (solved === 72) {
         clearInterval(timerInterval);
         const finalTime = document.getElementById('timer').innerText;
-        const finalErrors = errors;
-        const isNewRecord = checkNewRecord(finalTime);
-        const allCells = document.querySelectorAll('.cell');    // ★ ここで定義する（これ以降、setTimeoutの中でも使えます）
+        // const finalErrors = errors;
+        // const isNewRecord = checkNewRecord(finalTime);
+        // const allCells = document.querySelectorAll('.cell');    // ★ ここで定義する（これ以降、setTimeoutの中でも使えます）
         
-        if (isNewRecord) {
-            playSound('new-record');
-            allCells.forEach(cell => cell.classList.add('rainbow'));
-            document.getElementById('best-time').innerText = finalTime;     // update bestTime in the screen
-        } else {
-            playSound('clear');
-            allCells.forEach(cell => cell.classList.add('clear-flash'));
-        }
+        // if (isNewRecord) {
+        //     playSound('new-record');
+        //     allCells.forEach(cell => cell.classList.add('rainbow'));
+        //     document.getElementById('best-time').innerText = finalTime;     // update bestTime in the screen
+        // } else {
+        //     playSound('clear');
+        //     allCells.forEach(cell => cell.classList.add('clear-flash'));
+        // }
        
         setTimeout(() => {           // 演出が終わった後に実行される処理
-            allCells.forEach(cell => {      // ここで allCells を使ってもエラーになりません
-                cell.classList.remove('rainbow', 'clear-flash');
-            });
+            // allCells.forEach(cell => {      // ここで allCells を使ってもエラーになりません
+            //     cell.classList.remove('rainbow', 'clear-flash');
+            // });
             
-            // alert(`FINISH!\nTime: ${finalTime}\nErrors: ${finalErrors}`);
-            // saveResult(finalTime, finalErrors);
         // alertの代わりに自作モーダルを呼ぶ
             showModal(`FINISH!\nTime: ${finalTime}\nErrors: ${finalErrors}`, true);
-            saveResult(finalTime, finalErrors);
+            // saveResult(finalTime, finalErrors);
 
-        }, 3000); // flash for 3 sec
+        }, 300); // flash for 0.3 sec
     }
 }
 

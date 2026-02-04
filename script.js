@@ -381,18 +381,23 @@ function showModal(message, isClear = false) {
     const modal = document.getElementById('custom-modal');
     const msgArea = document.getElementById('modal-message');
     const btnArea = document.getElementById('modal-buttons');
-    
+    const rankingArea = document.getElementById('ranking-area');
+
     modal.style.display = 'flex';
     msgArea.innerText = message;
+    rankingArea.style.display = 'none';     // hide ranking at the beginning
     
-    if (isClear) {
-        // クリア時は2つのボタンを出す
+    if (isClear) {        // クリア時は2つのボタンを出す
         btnArea.innerHTML = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;">
+                <button onclick="fetchRanking('school')" style="font-size:12px; padding:8px 4px;">School TOP5</button>
+                <button onclick="fetchRanking('circuit')" style="font-size:12px; padding:8px 4px;">Circuit TOP5</button>
+                <button onclick="fetchRanking('cluster')" style="font-size:12px; padding:8px 4px;">Cluster TOP5</button>
+            </div>
             <button onclick="restartGame()">Try Again</button>
             <button onclick="backToSetup()">Quit</button>
         `;
-    } else {
-        // 通常のエラー時はOKボタンだけ
+    } else {            // 通常のエラー時はOKボタンだけ
         btnArea.innerHTML = `<button onclick="closeModal()">OK</button>`;
     }
 }
@@ -417,4 +422,33 @@ function backToSetup() {
     closeModal();
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('setup-screen').style.display = 'block';
+}
+
+async function fetchRanking(type) {
+    const schoolName = document.getElementById('school-list').value;
+    const schoolData = schoolMaster.find(s => s.name === schoolName);
+    const rankingList = document.getElementById('ranking-list');
+    const rankingTitle = document.getElementById('ranking-title');
+    
+    rankingTitle.innerText = "Loading...";
+    rankingList.innerHTML = "";
+    document.getElementById('ranking-area').style.display = 'block';
+
+    try {
+        const response = await fetch(`${GAS_URL}?action=getRanking&type=${type}&school=${schoolName}&circuit=${schoolData.circuit}&cluster=${schoolData.cluster}`);
+        const data = await response.json();
+
+        rankingTitle.innerText = `${type.toUpperCase()} TOP 5`;
+        if (data.length === 0) {
+            rankingList.innerHTML = "<li>No data yet</li>";
+        } else {
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = `${item.name}: ${item.time} (${item.errors} err)`;
+                rankingList.appendChild(li);
+            });
+        }
+    } catch (e) {
+        rankingTitle.innerText = "Error loading ranking";
+    }
 }

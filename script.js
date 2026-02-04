@@ -451,6 +451,15 @@ async function fetchRanking(type) {
     try {
         // ランキング取得時は mode: 'no-cors' を絶対に付けない（デフォルトのままで良い）
         const response = await fetch(`${GAS_URL}?${params.toString()}`);
+console.log('raw data:', rawData); 
+console.log('type/len:', typeof rawData, rawData?.length);
+console.log('first item keys:', rawData && Object.keys(rawData[0] || {}));
+const sample5 = (rawData || []).slice(0, 5);
+console.table(sample5);
+
+
+
+
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
 

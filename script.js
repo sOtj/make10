@@ -443,10 +443,11 @@ async function fetchRanking(type) {
     });
 
     try {
-        // mode: "cors" (デフォルト) で取得。
+        // ランキング取得時は mode: 'no-cors' を絶対に付けない（デフォルトのままで良い）
         const response = await fetch(`${GAS_URL}?${params.toString()}`);
         
-        // もしここでエラーが出るなら、GAS側の doGet の戻り値に問題があります
+        if (!response.ok) throw new Error('Network response was not ok');
+        
         const data = await response.json();
 
         // ボタン名を Region に合わせて表示

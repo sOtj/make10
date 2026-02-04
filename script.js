@@ -434,21 +434,39 @@ async function fetchRanking(type) {
     rankingList.innerHTML = "";
     document.getElementById('ranking-area').style.display = 'block';
 
+    const params = new URLSearchParams({
+        action: "getRanking",
+        type: type,
+        school: schoolName,
+        circuit: schoolData.circuit,
+        region: "Otjozondjupa" // 固定
+    });
+
     try {
-        const response = await fetch(`${GAS_URL}?action=getRanking&type=${type}&school=${schoolName}&circuit=${schoolData.circuit}&cluster=${schoolData.cluster}`);
+        // mode: "cors" (デフォルト) で取得。
+        const response = await fetch(`${GAS_URL}?${params.toString()}`);
+        
+        // もしここでエラーが出るなら、GAS側の doGet の戻り値に問題があります
         const data = await response.json();
 
-        rankingTitle.innerText = `${type.toUpperCase()} TOP 5`;
-        if (data.length === 0) {
+        // ボタン名を Region に合わせて表示
+        const titleMap = { school: "School", circuit: "Circuit", region: "Region" };
+        rankingTitle.innerText = `${titleMap[type]} TOP 5`;
+
+        if (!data || data.length === 0) {
             rankingList.innerHTML = "<li>No data yet</li>";
         } else {
-            data.forEach(item => {
+            data.forEach((item, index) => {
                 const li = document.createElement('li');
-                li.innerText = `${item.name}: ${item.time} (${item.errors} err)`;
+                li.style.borderBottom = "1px solid #eee";
+                li.style.padding = "4px 0";
+                li.innerHTML = `<strong>${index + 1}.</strong> ${item.name} (${item.school}) <br> 
+                                <span style="color:#d32f2f;">${item.time}</span> [Err:${item.errors}]`;
                 rankingList.appendChild(li);
             });
         }
     } catch (e) {
+        console.error(e);
         rankingTitle.innerText = "Error loading ranking";
     }
 }

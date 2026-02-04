@@ -383,7 +383,7 @@ function showModal(message, isClear = false) {
     const btnArea = document.getElementById('modal-buttons');
     const rankingArea = document.getElementById('ranking-area');
 
-    modal.style.display = 'flex';
+    modal.style.display = 'flex';   // centering
     msgArea.innerText = message;
     rankingArea.style.display = 'none';     // hide ranking at the beginning
     

@@ -392,7 +392,7 @@ function showModal(message, isClear = false) {
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;">
                 <button onclick="fetchRanking('school')" style="font-size:12px; padding:8px 4px;">School TOP5</button>
                 <button onclick="fetchRanking('circuit')" style="font-size:12px; padding:8px 4px;">Circuit TOP5</button>
-                <button onclick="fetchRanking('cluster')" style="font-size:12px; padding:8px 4px;">Cluster TOP5</button>
+                <button onclick="fetchRanking('region')" style="font-size:12px; padding:8px 4px;">Region TOP5</button>
             </div>
             <button onclick="restartGame()">Try Again</button>
             <button onclick="backToSetup()">Quit</button>

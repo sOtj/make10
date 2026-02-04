@@ -383,6 +383,8 @@ function showModal(message, isClear = false) {
     const btnArea = document.getElementById('modal-buttons');
     const rankingArea = document.getElementById('ranking-area');
 
+    modal.classList.add('active'); // CSSで .active { display: flex; } と定義しておく
+
     modal.style.display = 'flex';   // centering
     msgArea.innerText = message;
     rankingArea.style.display = 'none';     // hide ranking at the beginning
@@ -429,6 +431,8 @@ async function fetchRanking(type) {
     const rankingTitle = document.getElementById('ranking-title');
     const rankingList = document.getElementById('ranking-list');
  
+    rankingArea.classList.add('ranking-visible'); // 直接 style を触らずクラスで制御
+
     rankingArea.style.display = 'block';
     rankingTitle.innerText = "Loading...";
     rankingList.innerHTML = "";
@@ -455,7 +459,7 @@ async function fetchRanking(type) {
         rankingTitle.innerText = `${titles[type]} TOP 5`;
 
         if (!data || data.length === 0) {
-            rankingList.innerHTML = "<li>No data yet</li>";
+            rankingList.innerHTML = "<li>No data</li>";
         } else {
 //            data.forEach((item, index) => {
             data.forEach(item => {

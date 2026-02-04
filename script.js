@@ -222,7 +222,7 @@ function startGameLogic() {
         c.onclick = () => onCellClick(c);
         board.appendChild(c);
     });
-  }
+}
 // 配列の中身をランダムに混ぜる関数
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -425,14 +425,16 @@ function backToSetup() {
 }
 
 async function fetchRanking(type) {
-    const schoolName = document.getElementById('school-list').value;
-    const schoolData = schoolMaster.find(s => s.name === schoolName);
-    const rankingList = document.getElementById('ranking-list');
+    const rankingArea = document.getElementById('ranking-area');
     const rankingTitle = document.getElementById('ranking-title');
-    
+    const rankingList = document.getElementById('ranking-list');
+ 
+    rankingArea.style.display = 'block';
     rankingTitle.innerText = "Loading...";
     rankingList.innerHTML = "";
-    document.getElementById('ranking-area').style.display = 'block';
+
+    const schoolName = document.getElementById('school-list').value;
+    const schoolData = schoolMaster.find(s => s.name === schoolName);
 
     const params = new URLSearchParams({
         action: "getRanking",
@@ -445,24 +447,24 @@ async function fetchRanking(type) {
     try {
         // ランキング取得時は mode: 'no-cors' を絶対に付けない（デフォルトのままで良い）
         const response = await fetch(`${GAS_URL}?${params.toString()}`);
-        
         if (!response.ok) throw new Error('Network response was not ok');
-        
         const data = await response.json();
 
         // ボタン名を Region に合わせて表示
-        const titleMap = { school: "School", circuit: "Circuit", region: "Region" };
-        rankingTitle.innerText = `${titleMap[type]} TOP 5`;
+        const titles = { school: "School", circuit: "Circuit", region: "Region" };
+        rankingTitle.innerText = `${titles[type]} TOP 5`;
 
         if (!data || data.length === 0) {
             rankingList.innerHTML = "<li>No data yet</li>";
         } else {
-            data.forEach((item, index) => {
+//            data.forEach((item, index) => {
+            data.forEach(item => {
                 const li = document.createElement('li');
-                li.style.borderBottom = "1px solid #eee";
-                li.style.padding = "4px 0";
-                li.innerHTML = `<strong>${index + 1}.</strong> ${item.name} (${item.school}) <br> 
-                                <span style="color:#d32f2f;">${item.time}</span> [Err:${item.errors}]`;
+                li.innerText = `${item.name}: ${item.time}`;
+                // li.style.borderBottom = "1px solid #eee";
+                // li.style.padding = "4px 0";
+                // li.innerHTML = `<strong>${index + 1}.</strong> ${item.name} (${item.school}) <br> 
+                //                 <span style="color:#d32f2f;">${item.time}</span> [Err:${item.errors}]`;
                 rankingList.appendChild(li);
             });
         }

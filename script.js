@@ -532,7 +532,7 @@ async function fetchRanking(type) {
 //            data.forEach((item, index) => {
             data.forEach(item => {
                 const li = document.createElement('li');
-                li.innerText = `${item.name}: ${item.time}`;
+                li.innerText = `${item.time}| ${item.name} - ${item.school} gr${item.grade}`;
                 // li.style.borderBottom = "1px solid #eee";
                 // li.style.padding = "4px 0";
                 // li.innerHTML = `<strong>${index + 1}.</strong> ${item.name} (${item.school}) <br> 

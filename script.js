@@ -461,7 +461,7 @@ function showModal(message, isClear = false) {
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
     } else {            // 通常のエラー時はOKボタンだけ
-        btnArea.innerHTML = `<button class="action-btn" onclick="closeModal()">OK</button>`;
+        btnArea.innerHTML = `<button class="action-btn secondary" onclick="closeModal()">OK</button>`;
     }
 }
 

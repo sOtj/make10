@@ -444,7 +444,7 @@ function showModal(message, isClear = false) {
     msgArea.innerText = message;
     rankingArea.style.display = 'none';     // hide ranking at the beginning
     
-    if (isClear) {        // クリア時は2つのボタンを出す
+    if (isClear) {        // cleared all the cards
         btnArea.innerHTML = `
             <div class = "ranking-btn-container">
                 <button class = "ranking-btn" onclick="fetchRanking('school')">School TOP5</button>

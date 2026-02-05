@@ -347,12 +347,63 @@ function timeToSec(t) {
     return parseInt(p[0]) * 60 + parseInt(p[1]);
 }
 
-// 終了時の保存処理を修正
+// // 終了時の保存処理を修正
+// async function saveResult(time, err) {
+//     const schoolName = document.getElementById('school-list').value;
+//     const schoolData = schoolMaster.find(s => s.name === schoolName);
+
+//  // URLSearchParams の中にすべてのデータを詰め込む
+//     const params = new URLSearchParams({
+//         action: "save",
+//         name: document.getElementById('user-name').value,
+//         school: schoolName,
+//         grade: document.getElementById('grade-list').value,
+//         password: document.getElementById('user-pass').value,
+//         time: time,
+//         errors: err,
+//         circuit: schoolData.circuit,
+//         cluster: schoolData.cluster,
+//         ur: schoolData.ur,
+//         schoolID: schoolData.id
+//     });
+//     //    const payload = {
+//     //     action: "save",
+//     //     name: document.getElementById('user-name').value,
+//     //     school: schoolName,
+//     //     grade: document.getElementById('grade-list').value,
+//     //     password: document.getElementById('user-pass').value,
+//     //     time: time,
+//     //     errors: err,
+//     //     circuit: schoolData.circuit,
+//     //     cluster: schoolData.cluster,
+//     //     ur: schoolData.ur,
+//     //     schoolID: schoolData.id
+//     // };
+//     // console.log("Payload to send:", payload); // ★これを追加して、送信前に中身を確認！
+//     console.log("Saving data...", params.toString());
+//     // await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
+//     // console.log("Data saved successfully");
+//     try {
+//         // params.toString() を使って URL の後ろにデータをくっつけて送る
+//         await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
+//         console.log("Data saved successfully");
+//     } catch (e) {
+//         console.error("Save error:", e);
+//     }
+// }
+
 async function saveResult(time, err) {
+    console.log("Saving process started..."); // 動作確認用
+
     const schoolName = document.getElementById('school-list').value;
     const schoolData = schoolMaster.find(s => s.name === schoolName);
 
- // URLSearchParams の中にすべてのデータを詰め込む
+    if (!schoolData) {
+        console.error("School data not found!");
+        return;
+    }
+
+    // URLSearchParams を「この関数内」で定義する
     const params = new URLSearchParams({
         action: "save",
         name: document.getElementById('user-name').value,
@@ -366,31 +417,20 @@ async function saveResult(time, err) {
         ur: schoolData.ur,
         schoolID: schoolData.id
     });
-    //    const payload = {
-    //     action: "save",
-    //     name: document.getElementById('user-name').value,
-    //     school: schoolName,
-    //     grade: document.getElementById('grade-list').value,
-    //     password: document.getElementById('user-pass').value,
-    //     time: time,
-    //     errors: err,
-    //     circuit: schoolData.circuit,
-    //     cluster: schoolData.cluster,
-    //     ur: schoolData.ur,
-    //     schoolID: schoolData.id
-    // };
-    // console.log("Payload to send:", payload); // ★これを追加して、送信前に中身を確認！
-    console.log("Saving data...", params.toString());
-    // await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
-    // console.log("Data saved successfully");
+
+    const fullURL = `${GAS_URL}?${params.toString()}`;
+    console.log("Full URL to be sent:", fullURL); // ★これをコンソールで見て、URLが正しいか確認！
+
     try {
-        // params.toString() を使って URL の後ろにデータをくっつけて送る
-        await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
-        console.log("Data saved successfully");
+        // mode: 'no-cors' で送信
+        await fetch(fullURL, { mode: 'no-cors' });
+        console.log("Fetch call completed (no-cors). Check Spreadsheet now.");
     } catch (e) {
-        console.error("Save error:", e);
+        console.error("Fetch failed:", e);
     }
 }
+
+
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {

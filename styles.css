@@ -50,16 +50,16 @@ button:disabled {background-color: #ccc;cursor: not-allowed;opacity: 0.7;}
 
 #modal-buttons button:last-child { background: #6c757d; }  /* 終了ボタンはグレーに 
 
-/* モーダル全体の背景（暗い部分） 
-.modal-overlay { display: none; position: fixed;    /* 初期状態は隠す 
+/* モーダル全体の背景（暗い部分） */
+.modal-overlay { display: none; position: fixed;    /* 初期状態は隠す */
     top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; 
     align-items: center; justify-content: center; }
 
-/* モーダルの中身（白い箱） 
+/* モーダルの中身（白い箱） */
 .modal-content { background: white; padding: 20px; border-radius: 15px; text-align: center;
     width: 85%; max-width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
-/* ランキング表示エリア 
+/* ランキング表示エリア */
 .ranking-box { display: none; margin: 15px 0; text-align: left; font-size: 14px; background: #f0f0f0; 
     padding: 12px; border-radius: 8px; max-height: 200px; overflow-y: auto; }
 

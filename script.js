@@ -352,12 +352,12 @@ async function saveResult(time, err) {
     const schoolName = document.getElementById('school-list').value;
     const schoolData = schoolMaster.find(s => s.name === schoolName);
 
-    const payload = {
+ // URLSearchParams の中にすべてのデータを詰め込む
+    const params = new URLSearchParams({
         action: "save",
         name: document.getElementById('user-name').value,
         school: schoolName,
         grade: document.getElementById('grade-list').value,
-//        password: document.getElementById('user-pass').value,
         password: document.getElementById('user-pass').value,
         time: time,
         errors: err,
@@ -365,12 +365,31 @@ async function saveResult(time, err) {
         cluster: schoolData.cluster,
         ur: schoolData.ur,
         schoolID: schoolData.id
-    };
-
-    console.log("Payload to send:", payload); // ★これを追加して、送信前に中身を確認！
-
-    await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
-    console.log("Data saved successfully");
+    });
+    //    const payload = {
+    //     action: "save",
+    //     name: document.getElementById('user-name').value,
+    //     school: schoolName,
+    //     grade: document.getElementById('grade-list').value,
+    //     password: document.getElementById('user-pass').value,
+    //     time: time,
+    //     errors: err,
+    //     circuit: schoolData.circuit,
+    //     cluster: schoolData.cluster,
+    //     ur: schoolData.ur,
+    //     schoolID: schoolData.id
+    // };
+    // console.log("Payload to send:", payload); // ★これを追加して、送信前に中身を確認！
+    console.log("Saving data...", params.toString());
+    // await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
+    // console.log("Data saved successfully");
+    try {
+        // params.toString() を使って URL の後ろにデータをくっつけて送る
+        await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
+        console.log("Data saved successfully");
+    } catch (e) {
+        console.error("Save error:", e);
+    }
 }
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||

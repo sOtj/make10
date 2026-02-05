@@ -529,7 +529,7 @@ async function fetchRanking(type) {
         if (!data || data.length === 0) {
             rankingList.innerHTML = "<li>No data</li>";
         } else {
-//            data.forEach((item, index) => {
+//  -----------  New Top5 format
             data.forEach(item => {
                 const li = document.createElement('li');
                 li.innerText = `${item.time}| ${item.name} - ${item.school} gr${item.grade}`;

@@ -318,7 +318,7 @@ function checkClear() {     // ***** done / not yet
             
         // alertの代わりに自作モーダルを呼ぶ
             showModal(`FINISH!\nTime: ${finalTime}\nErrors: ${finalErrors}`, true);
-            // saveResult(finalTime, finalErrors);
+            saveResult(finalTime, finalErrors);
 
         }, 2000); // flash for 0.3 sec
     }
@@ -512,8 +512,6 @@ async function fetchRanking(type) {
 // console.log('first item keys:', rawData && Object.keys(rawData[0] || {}));
 // const sample5 = (rawData || []).slice(0, 5);
 // console.table(sample5);
-
-
 
 
         if (!response.ok) throw new Error('Network response was not ok');

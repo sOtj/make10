@@ -438,11 +438,16 @@ function showModal(message, isClear = false) {
     const btnArea = document.getElementById('modal-buttons');
     const rankingArea = document.getElementById('ranking-area');
 
-    modal.classList.add('active'); // CSSで .active { display: flex; } と定義しておく
-
-    modal.style.display = 'flex';   // centering
+    // CSSの display:none を打ち消すために flex を指定
+    modal.style.display = 'flex'; 
     msgArea.innerText = message;
-    rankingArea.style.display = 'none';     // hide ranking at the beginning
+    rankingArea.style.display = 'none';
+    
+    // modal.classList.add('active'); // CSSで .active { display: flex; } と定義しておく
+
+    // modal.style.display = 'flex';   // centering
+    // msgArea.innerText = message;
+    // rankingArea.style.display = 'none';     // hide ranking at the beginning
     
     if (isClear) {        // cleared all the cards
         btnArea.innerHTML = `
@@ -456,7 +461,7 @@ function showModal(message, isClear = false) {
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
     } else {            // 通常のエラー時はOKボタンだけ
-        btnArea.innerHTML = `<button onclick="closeModal()">OK</button>`;
+        btnArea.innerHTML = `<button class="action-btn" onclick="closeModal()">OK</button>`;
     }
 }
 

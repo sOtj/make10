@@ -310,6 +310,8 @@ function checkClear() {     // ***** done / not yet
             playSound('clear');
             allCells.forEach(cell => cell.classList.add('clear-flash'));
         }
+
+        saveResult(finalTime, finalErrors);
        
         setTimeout(() => {           // 演出が終わった後に実行される処理
             allCells.forEach(cell => {      // ここで allCells を使ってもエラーになりません
@@ -318,8 +320,7 @@ function checkClear() {     // ***** done / not yet
             
         // alertの代わりに自作モーダルを呼ぶ
             showModal(`FINISH!\nTime: ${finalTime}\nErrors: ${finalErrors}`, true);
-            saveResult(finalTime, finalErrors);
-
+            
         }, 2000); // flash for 0.3 sec
     }
 }
@@ -415,7 +416,7 @@ async function saveResult(time, err) {
         circuit: schoolData.circuit,
         cluster: schoolData.cluster,
         ur: schoolData.ur,
-        schoolID: schoolData.id
+        id: schoolData.id
     });
 
     const fullURL = `${GAS_URL}?${params.toString()}`;

@@ -369,11 +369,8 @@ async function saveResult(time, err) {
 
     console.log("Payload to send:", payload); // ★これを追加して、送信前に中身を確認！
 
-    await fetch(GAS_URL, {
-        method: "POST",
-        mode: "no-cors", // 保存のみの場合はこれで安定します
-        body: JSON.stringify(payload)
-    });
+    await fetch(`${GAS_URL}?${params.toString()}`, { mode: 'no-cors' });
+    console.log("Data saved successfully");
 }
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||

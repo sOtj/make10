@@ -62,3 +62,20 @@ button:disabled {background-color: #ccc;cursor: not-allowed;opacity: 0.7;}
 /* ランキング表示エリア */
 .ranking-box { display: none; margin: 15px 0; text-align: left; font-size: 14px; background: #f0f0f0; 
     padding: 12px; border-radius: 8px; max-height: 200px; overflow-y: auto; }
+
+/* ボタンを横並びにするコンテナ */
+.ranking-btn-container { display: grid; grid-template-columns: 1fr 1fr 1fr; /* 3等分 */
+                        gap: 5px; margin-bottom: 10px; }
+
+/* 3つのランキングボタン共通スタイル */
+.ranking-btn { background-color: #007bff; color: white;
+                border: none; border-radius: 8px; padding: 8px 2px;
+                font-size: 12px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+
+.ranking-btn:hover { background-color: #0056b3; }   /* 押した時に少し暗くする */
+
+/* 下にある大きなボタン用（任意） */
+.action-btn { width: 100%; padding: 12px; margin-top: 5px; border-radius: 8px; border: none;
+                font-weight: bold; background-color: #007bff; color: white; }
+
+.action-btn.secondary { background-color: #6c757d; }    /* Quitボタンなどはグレーに */

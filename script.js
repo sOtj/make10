@@ -431,8 +431,6 @@ async function saveResult(time, err) {
     }
 }
 
-
-
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {
     const modal = document.getElementById('custom-modal');
@@ -448,13 +446,14 @@ function showModal(message, isClear = false) {
     
     if (isClear) {        // クリア時は2つのボタンを出す
         btnArea.innerHTML = `
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;">
-                <button onclick="fetchRanking('school')" style="font-size:12px; padding:8px 4px;">School TOP5</button>
-                <button onclick="fetchRanking('circuit')" style="font-size:12px; padding:8px 4px;">Circuit TOP5</button>
-                <button onclick="fetchRanking('region')" style="font-size:12px; padding:8px 4px;">Region TOP5</button>
+            <div class = "ranking-btn-container">
+                <button class = "ranking-btn" onclick="fetchRanking('school')">School TOP5</button>
+                <button class = "ranking-btn" onclick="fetchRanking('circuit')">Circuit TOP5</button>
+                <button class = "ranking-btn" onclick="fetchRanking('region')">Region TOP5</button>
             </div>
-            <button onclick="restartGame()">Try Again</button>
-            <button onclick="backToSetup()">Quit</button>
+
+            <button class="action-btn" onclick="restartGame()">Try Again</button>
+            <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
     } else {            // 通常のエラー時はOKボタンだけ
         btnArea.innerHTML = `<button onclick="closeModal()">OK</button>`;

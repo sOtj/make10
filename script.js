@@ -657,11 +657,12 @@ function checkFormCompletion() {
     
     if (c && s && g) {
         btn.disabled = false;
-        btn.classList.remove('secondary'); // 灰色を解除
-        btn.style.backgroundColor = "#007bff"; // 青色にする
+        btn.classList.add('secondary'); // 灰色へ
+        btn.classList.remove('supress'); 
     } else {
         btn.disabled = true;
-        btn.classList.add('secondary');
+        btn.classList.add('supress');   //よく見えなくする
+        btn.classList.remove('secondary');
     }
 }
 
@@ -691,7 +692,7 @@ async function handleCheckNames() {
     const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b.name));
 
     if (uniqueNames.length > 0) {
-        listArea.innerHTML = "<strong>Registered:</strong><br>" + uniqueNames.join(", ");
+        listArea.innerHTML = "<strong>Registered:</strong>school  grade<br>" + uniqueNames.join(", ");
     } else {
         listArea.innerHTML = "No names registered for this grade yet.";
     }

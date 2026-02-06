@@ -112,18 +112,26 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
     const grade = document.getElementById('grade-list').value;
     const password = document.getElementById('user-pass').value;
 
-    if(!name) { playSound('wrong');
-                showModal("Enter your name!");
-                return; }
-    if(!school) { playSound('wrong');
-                showModal("Select your school!");
-                return; }
-    if(!grade) { playSound('wrong');
-                showModal("Select your grade!");
-                return; }
-    if(password.length !== 4) { playSound('wrong');
-                showModal("Enter a 4-digit password!");
-                return; }
+    if(!name) { 
+        playSound('wrong');
+        showModal("Enter your name!");
+        return; 
+    }
+    if(!school) { 
+        playSound('wrong');
+        showModal("Select your school!");
+        return; 
+    }
+    if(!grade) { 
+        playSound('wrong');
+        showModal("Select your grade!");
+        return; 
+    }
+    if(password.length !== 4) { 
+        playSound('wrong');
+        showModal("Enter a 4-digit password!");
+        return; 
+    }
 
     // --- 追加：音源のアンロック処理 ---
     const sounds = ['correct', 'wrong', 'clear', 'new-record'];

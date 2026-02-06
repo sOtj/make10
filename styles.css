@@ -94,13 +94,13 @@ button:disabled {background-color: #ccc;cursor: not-allowed;opacity: 0.7;}
     margin-top: 8px;
     border: none;
     border-radius: 8px;
-    background-color: #007bff; /* 青色 */
+    background-color: #FCA404; /* orange */
     color: white;
     font-weight: bold;
     cursor: pointer;
 }
-.action-btn:hover {     /* --- 下の大きなボタン（青）のホバー設定 --- */
-    background-color: #0056b3 !important; 
+.action-btn:hover {     /* --- darker orange --- */
+    background-color: #FA8606 !important; 
     transition: background-color 0.2s;
 }
 
@@ -127,7 +127,7 @@ button:disabled {background-color: #ccc;cursor: not-allowed;opacity: 0.7;}
 
 /* 4. ランキングボタン（個別のスタイルを優先させる） */
 .ranking-btn {
-    background-color: #007bff !important; /* 強制的に青にする */
+    background-color: #FCA404 !important; /* orange colour */
     color: white !important;
     border: none;
     border-radius: 8px;
@@ -137,6 +137,6 @@ button:disabled {background-color: #ccc;cursor: not-allowed;opacity: 0.7;}
     cursor: pointer;
 }
 .ranking-btn:hover {   /* --- ランキングボタン（青）のホバー設定 --- */   
-    background-color: #0056b3 !important; /* 通常の青より少し濃い青 */
+    background-color: #FA8606 !important; /* darker Orange */
     transition: background-color 0.2s;    /* 色の変化を滑らかにする */
 }

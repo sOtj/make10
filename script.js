@@ -112,7 +112,7 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
     const grade = document.getElementById('grade-list').value;
     const password = document.getElementById('user-pass').value;
 
-    if(!name) return showModal("Enter your name!");
+    if(!name) return showModal("Enter your name!") playSound('wrong');
     if(!school) return showModal("Select your school!");
     if(!grade) return showModal("Select your grade!");
     if(password.length !== 4) return showModal("Enter a 4-digit password!");

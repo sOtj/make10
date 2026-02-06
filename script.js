@@ -636,3 +636,65 @@ async function fetchRanking(type) {
         rankingTitle.innerText = "Error loading ranking";
     }
 } // fetchRanking終了
+
+
+
+
+
+
+
+
+
+
+
+
+// 入力状況を監視して、3つ揃ったらボタンを青く（有効に）する
+function checkFormCompletion() {
+    const c = document.getElementById('circuit-filter').value;
+    const s = document.getElementById('school-list').value;
+    const g = document.getElementById('grade-list').value;
+    const btn = document.getElementById('check-names-btn');
+    
+    if (c && s && g) {
+        btn.disabled = false;
+        btn.classList.remove('secondary'); // 灰色を解除
+        btn.style.backgroundColor = "#007bff"; // 青色にする
+    } else {
+        btn.disabled = true;
+        btn.classList.add('secondary');
+    }
+}
+
+// 各セレクトボックスにイベントを登録
+document.getElementById('circuit-filter').addEventListener('change', checkFormCompletion);
+document.getElementById('school-list').addEventListener('change', checkFormCompletion);
+document.getElementById('grade-list').addEventListener('change', checkFormCompletion);
+
+// 名前一覧を表示する処理
+async function handleCheckNames() {
+    const school = document.getElementById('school-list').value;
+    const grade = document.getElementById('grade-list').value;
+    const listArea = document.getElementById('registered-names-list');
+
+    listArea.innerHTML = "Loading...";
+    listArea.style.display = "block";
+
+    const params = new URLSearchParams({ action: "getRanking", type: "school", school: school });
+    const response = await fetch(`${GAS_URL}?${params.toString()}`);
+    const data = await response.json();
+
+    // 学年で絞り込み、名前をアルファベット順に
+    const names = data
+        .filter(item => String(item.grade) === String(grade))
+        .map(item => item.name);
+    
+    const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b.name));
+
+    if (uniqueNames.length > 0) {
+        listArea.innerHTML = "<strong>Registered:</strong><br>" + uniqueNames.join(", ");
+    } else {
+        listArea.innerHTML = "No names registered for this grade yet.";
+    }
+};
+
+    document.getElementById('check-names-btn').onclick = handleCheckNames;

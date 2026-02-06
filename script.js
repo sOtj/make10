@@ -692,7 +692,7 @@ async function handleCheckNames() {
     const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b.name));
 
     if (uniqueNames.length > 0) {
-        listArea.innerHTML = `<strong>Registered:</strong>${school} ${grade}<br>" + ${uniqueNames.join(", ")}`;
+        listArea.innerHTML = `<strong>Registered: ${school} ${grade}</strong><br> ${uniqueNames.join(", ")}`;
     } else {
         listArea.innerHTML = `No names registered for ${school} ${grade} yet.`;
     }

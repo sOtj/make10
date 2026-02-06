@@ -532,11 +532,20 @@ async function fetchRanking(type) {
 //  -----------  New Top5 format
             data.forEach(item => {
                 const li = document.createElement('li');
-                li.innerText = `${item.time}| ${item.name} - ${item.school} ${item.grade}`;
+                li.innerText = `${item.time} | ${item.name} - ${item.school} ${item.grade}`;
                 // li.style.borderBottom = "1px solid #eee";
                 // li.style.padding = "4px 0";
                 // li.innerHTML = `<strong>${index + 1}.</strong> ${item.name} (${item.school}) <br> 
                 //                 <span style="color:#d32f2f;">${item.time}</span> [Err:${item.errors}]`;
+                
+                // ★ 自分のデータかどうか判定（名前・学校・学年が一致）
+                if (item.name === currentName && 
+                    item.school === currentSchool && 
+                    String(item.grade) === String(currentGrade)) {
+                    
+                    li.style.color = "red";          // 文字を赤くする
+                    li.style.fontWeight = "bold";   // 太字にしてさらに目立たせる
+                }
                 rankingList.appendChild(li);
             });
         }

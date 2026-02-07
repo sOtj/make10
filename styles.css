@@ -141,13 +141,13 @@ button:disabled {background-color: #ebebeb;cursor: not-allowed;opacity: 0.7;}
     transition: background-color 0.2s;    /* 色の変化を滑らかにする */
 }
 
-/* CSS：見た目をすべて一括管理 */
-#help-btn {     /* サイズと形状 */
+/* CSS：見た目をすべて一括管理
+#help-btn {     /* サイズと形状
     width: 32px; height: 32px; border-radius: 50%;
-    /* 文字の調整 */
+    /* 文字の調整
     font-size: 18px; font-weight: bold; display: flex; align-items: center; justify-content: center;
-    /* 色と装飾 */
+    /* 色と装飾
     background-color: #fca404; color: #333; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    /* その他 */
+    /* その他
     cursor: pointer; padding: 0;
-}
+} */

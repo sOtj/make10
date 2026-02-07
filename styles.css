@@ -19,13 +19,13 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    width: 100%;
+    width: 90%;
 }
 
 .input-group { 
     margin-bottom: 15px; 
     text-align: left; /* ラベルを左寄せに固定 */
-    width: 100%;
+    width: 90%;
 }
 
 label { 
@@ -37,7 +37,7 @@ label {
 
 /* 入力欄の幅を100%に固定し、はみ出しを防ぐ */
 select, input { 
-    width: 100% !important; 
+    width: 90% !important; 
     padding: 12px; 
     border: 1px solid #ddd; 
     border-radius: 8px; 
@@ -48,7 +48,7 @@ select, input {
 
 /* START GAMEボタン */
 #start-button { 
-    width: 100%; 
+    width: 90%; 
     padding: 15px; 
     background-color: #FCA404; /* オレンジで統一 */
     color: white; 

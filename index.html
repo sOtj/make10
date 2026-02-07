@@ -8,17 +8,13 @@
   </head>
   <body>
     <div id="setup-screen">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="setup-header">
             <h2>Game Setup</h2>
             <button type="button" id="help-btn">?</button>
         </div>
     </div>
     <!--    
       <h1>make 10 game</h1>
-      <div class="input-group">
-          <label>Your Name</label>
-          <input type="text" id="user-name" placeholder="Enter Name">
-      </div>
     -->
       <div class="input-group">
           <label>Circuit</label>
@@ -49,6 +45,10 @@
           </select>
       </div>
       <div class="input-group">
+          <label>Your Name</label>
+          <input type="text" id="user-name" placeholder="Enter your name">
+      </div>
+      <div class="input-group">
           <label>4-Digit Password</label>
           <input type="tel" id="user-pass" maxlength="4" placeholder="e.g. 1234" autocomplete="off">
       </div>
@@ -59,7 +59,6 @@
     
         <div id="registered-names-list" >
         </div>
-
 
         <button id="start-button", class="action-btn" onclick="initGame()">START GAME</button>
     </div>

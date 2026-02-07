@@ -113,23 +113,23 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
     const password = document.getElementById('user-pass').value;
 
     if(!name) { 
-        playSound('wrong');
         showModal("Enter your name!");
+        playSound('wrong');
         return; 
     }
     if(!school) { 
-        playSound('wrong');
         showModal("Select your school!");
+        playSound('wrong');
         return; 
     }
     if(!grade) { 
-        playSound('wrong');
         showModal("Select your grade!");
+        playSound('wrong');
         return; 
     }
     if(password.length !== 4) { 
-        playSound('wrong');
         showModal("Enter a 4-digit password!");
+        playSound('wrong');
         return; 
     }
 
@@ -715,3 +715,20 @@ async function handleCheckNames() {
 };
 
     document.getElementById('check-names-btn').onclick = handleCheckNames;
+
+// 1. ヘルプを表示する専用の関数を定義
+function showHelp() {
+    const helpMessage = `【How to Play】
+1. Select your School and Grade.
+2. Find your name (Check Names).
+3. Enter your 4-digit password.
+4. Select a pair that makes 10!
+   (Example: 3 and 7, 5 and 5)
+   
+Good luck! 🍀`;
+
+    showModal(helpMessage);
+}
+
+// 2. ボタンをクリックした時にその関数を呼び出すように設定
+document.getElementById('help-btn').onclick = showHelp;

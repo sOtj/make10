@@ -12,60 +12,58 @@
                 <h2>Game Setup</h2>
                 <button type="button" id="help-btn">?</button>
             </div>
-        </div>
-        <div class="input-group">
-            <label>Circuit</label>
-            <select id="circuit-filter" onchange="updateSchoolList()">
-                <option value="">Select Circuit</option>
-                <option value="Grootfontein">Grootfontein</option>
-                <option value="Okahandja">Okahandja</option>
-                <option value="Otjiwarongo">Otjiwarongo</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <label>Your School</label>
-            <select id="school-list">
-                <option value="">Select School</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <label>Grade</label>
-            <select id="grade-list">
-                <option value="">Select Grade</option>
-                <option value="gr1">grade 1</option>
-                <option value="gr2">grade 2</option>
-                <option value="gr3">grade 3</option>
-                <option value="gr4">grade 4</option>
-                <option value="gr5">grade 5</option>
-                <option value="gr6">grade 6</option>
-                <option value="gr7">grade 7</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <label>Your Name</label>
-            <input type="text" id="user-name" placeholder="Enter your name">
-        </div>
-        <div class="input-group">
-            <label>4-Digit Password</label>
-            <input type="tel" id="user-pass" maxlength="4" placeholder="e.g. 1234" autocomplete="off">
-        </div>
+            <div class="input-group">
+                <label>Circuit</label>
+                <select id="circuit-filter" onchange="updateSchoolList()">
+                    <option value="">Select Circuit</option>
+                    <option value="Grootfontein">Grootfontein</option>
+                    <option value="Okahandja">Okahandja</option>
+                    <option value="Otjiwarongo">Otjiwarongo</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Your School</label>
+                <select id="school-list">
+                    <option value="">Select School</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Grade</label>
+                <select id="grade-list">
+                    <option value="">Select Grade</option>
+                    <option value="gr1">grade 1</option>
+                    <option value="gr2">grade 2</option>
+                    <option value="gr3">grade 3</option>
+                    <option value="gr4">grade 4</option>
+                    <option value="gr5">grade 5</option>
+                    <option value="gr6">grade 6</option>
+                    <option value="gr7">grade 7</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Your Name</label>
+                <input type="text" id="user-name" placeholder="Enter your name">
+            </div>
+            <div class="input-group">
+                <label>4-Digit Password</label>
+                <input type="tel" id="user-pass" maxlength="4" placeholder="e.g. 1234" autocomplete="off">
+            </div>
 
             <button type="button" id="check-names-btn" class="action-btn supress" disabled="true">
                 List of Registered Names
             </button>
-        
             <div id="registered-names-list" >
             </div>
 
             <button id="start-button", class="action-btn" onclick="initGame()">START GAME</button>
         </div>
 
-        <div id="game-screen" style="display: none;">
-        <div id="status-bar">
-            <div class="stat-box"><div class="stat-label">Time</div><div id="timer" class="stat-value">00:00</div></div>
-            <div class="stat-box"><div class="stat-label">Errors</div><div id="error-count" class="stat-value">0</div></div>
-            <div class="stat-box"><div class="stat-label">Best</div><div id="best-time" class="stat-value">--:--</div></div>
-        </div>
+        <div id="game-screen">
+            <div id="status-bar">
+                <div class="stat-box"><div class="stat-label">Time</div><div id="timer" class="stat-value">00:00</div></div>
+                <div class="stat-box"><div class="stat-label">Errors</div><div id="error-count" class="stat-value">0</div></div>
+                <div class="stat-box"><div class="stat-label">Best</div><div id="best-time" class="stat-value">--:--</div></div>
+            </div>
         </div>
 
         <div id="board"></div>

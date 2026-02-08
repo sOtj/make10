@@ -61,7 +61,7 @@ select, input {
     box-sizing: border-box; 
 } */
 
-#game-screen { width: 100%;    max-width: 600px;    margin: 0 auto;    text-align: center;}
+/* #game-screen { width: 100%;    max-width: 600px;    margin: 0 auto;    text-align: center;} */
 
 /* ゲーム画面は JavaScript で表示を切り替えるので、最初は style="display: none;" で消しておきます */ 
 
@@ -198,4 +198,15 @@ button:disabled {background-color: #ebebeb;cursor: not-allowed;opacity: 0.7;}
     background-color: #fca404; color: #333; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     /* その他 */
     cursor: pointer; padding: 0;
+}
+
+#registered-names-list{
+    display:none;   /* 最初は隠しておく */
+    margin: 10px 0; 
+    font-size: 14px; 
+    text-align: left;
+    background-color: #f8f8f8; /* 枠を少し目立たせると見やすいです */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }

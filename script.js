@@ -181,7 +181,7 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
 //        document.getElementById('best-time').innerText = result.data;     // ベストタイムを表示
 
         // ゲーム開始の準備
-//        document.getElementById('setup-screen').style.display = 'none'; // 設定画面を隠す
+       document.getElementById('setup-screen').style.display = 'none'; // 設定画面を隠す
         startGameLogic(); // 実際のゲーム開始処理（セル生成など）を別関数に切り出すと綺麗です
 
     } catch (e) {

@@ -711,18 +711,49 @@ async function handleCheckNames() {
     document.getElementById('check-names-btn').onclick = handleCheckNames;
 
 // 1. ヘルプを表示する専用の関数を定義
-function showHelp() {
-    const helpMessage = `【How to Play】
-1. Select your School and Grade.
-2. Find your name (Check Names).
-3. Enter your 4-digit password.
-4. Select a pair that makes 10!
-   (Example: 3 and 7, 5 and 5)
+// function showHelp() {
+//     const helpMessage = `【How to Play】
+// 1. Select your School and Grade.
+// 2. Find your name (Check Names).
+// 3. Enter your 4-digit password.
+// 4. Select a pair that makes 10!
+//    (Example: 3 and 7, 5 and 5)
    
-Good luck! 🍀`;
+// Good luck! 🍀`;
 
-    showModal(helpMessage);
-}
+//     showModal(helpMessage);
+// }
+const helpMessage = `
+    <div style="text-align: left; font-size: 15px; line-height: 1.4;">
+        <p><b>1. School & Grade</b><br>Select from the lists.</p>
+        
+        <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
+        
+        <p><b>3. Password</b><br>Enter your 4-digit number.</p>
+        
+        <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
+        
+        <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
+            <div style="margin-bottom: 15px;">
+                <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
+                <br><small>Pick one (Yellow! 🟡)</small>
+            </div>
+            <div>
+                <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
+                <br><small>Match for 10 (Blue! 🔵)</small>
+            </div>
+        </div>
+        
+        <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
+    </div>
+`;
+
+
+
+
+
+
+
 
 // 2. ボタンをクリックした時にその関数を呼び出すように設定
 document.getElementById('help-btn').onclick = showHelp;

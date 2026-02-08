@@ -711,7 +711,7 @@ async function handleCheckNames() {
     document.getElementById('check-names-btn').onclick = handleCheckNames;
 
 // 1. ヘルプを表示する専用の関数を定義
-// function showHelp() {
+function showHelp() {
 //     const helpMessage = `【How to Play】
 // 1. Select your School and Grade.
 // 2. Find your name (Check Names).
@@ -721,8 +721,6 @@ async function handleCheckNames() {
    
 // Good luck! 🍀`;
 
-//     showModal(helpMessage);
-// }
 const helpMessage = `
     <div style="text-align: left; font-size: 15px; line-height: 1.4;">
         <p><b>1. School & Grade</b><br>Select from the lists.</p>
@@ -748,6 +746,8 @@ const helpMessage = `
     </div>
 `;
 
+    showModal(helpMessage);
+}
 
 
 

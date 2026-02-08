@@ -7,12 +7,6 @@
       <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-
-<button onclick="document.querySelector('.cell').classList.add('rainbow'); setTimeout(()=>document.querySelector('.cell').classList.remove('wrong-flash'), 500)">
-    Test Animation
-</button>
-
-
         <div id="setup-screen">
             <div class="setup-header">
                 <h2>Game Setup</h2>
@@ -71,6 +65,13 @@
                 <div class="stat-box"><div class="stat-label">Best</div><div id="best-time" class="stat-value">--:--</div></div>
             </div>
         </div>
+
+
+        <button onclick="document.querySelector('.cell').classList.add('rainbow'); setTimeout(()=>document.querySelector('.cell').classList.remove('wrong-flash'), 500)">
+    Test Animation
+</button>
+
+
 
         <div id="board"></div>
 

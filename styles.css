@@ -92,7 +92,7 @@ select, input {
 .correct-pop { animation: pop-anim 0.4s ease-out; background-color: #ffeb3b !important; z-index: 10; }
 .wrong-flash { animation: flash-wrong 0.1s steps(2) 3; }
 /* .rainbow { animation: rainbow-flash 1.5s linear infinite; } */
-.rainbow { animation: rainbow-flash 2.4s steps(6) 5; }
+.rainbow { animation: rainbow-flash 1.2s steps(6) 5; }
 .clear-flash { animation: clear-cyan 1.0s steps(2) 5; }
 
 /* 設定・ログインエリア */

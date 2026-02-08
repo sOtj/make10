@@ -337,7 +337,7 @@ function checkClear() {     // ***** done / not yet
         // alertの代わりに自作モーダルを呼ぶ
             showModal(`FINISH!\nTime: ${finalTime}\nErrors: ${finalErrors}`, true);
             
-        }, 2000); // flash for 0.3 sec
+        }, 6000); // flash for 0.3 sec
     }
 }
 

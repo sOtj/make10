@@ -723,6 +723,9 @@ function showHelp() {
 // Good luck! 🍀`;
 
 const helpMessage = `
+    <div style="text-align: center; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: #333;">How To Play</h2>
+    </div>
     <div style="text-align: left; font-size: 15px; line-height: 1.4;">
         <p><b>1. School & Grade</b><br>Select from the lists.</p>
         

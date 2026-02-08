@@ -7,7 +7,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 /*    max-width: 400px; */
 /*    margin: 20px auto; */
     background-color: white; 
-/*    padding: 25px; /* 少しパディングを増やしてゆとりを持たせる */
+    padding: 25px; /* 少しパディングを増やしてゆとりを持たせる */
     border-radius: 12px; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
     box-sizing: border-box; /* 枠線を含んだ幅計算にする */

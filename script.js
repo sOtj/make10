@@ -456,7 +456,8 @@ function showModal(message, isClear = false) {
 
     // CSSの display:none を打ち消すために flex を指定
     modal.style.display = 'flex'; 
-    msgArea.innerText = message;
+//    msgArea.innerText = message;
+    msgArea.innerHTML = message;
     rankingArea.style.display = 'none';
     
     // modal.classList.add('active'); // CSSで .active { display: flex; } と定義しておく

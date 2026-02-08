@@ -5,9 +5,9 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 #setup-screen { 
     width: 100%; 
 /*    max-width: 400px; */
-    margin: 20px auto; 
+/*    margin: 20px auto; */
     background-color: white; 
-    padding: 25px; /* 少しパディングを増やしてゆとりを持たせる */
+/*    padding: 25px; /* 少しパディングを増やしてゆとりを持たせる */
     border-radius: 12px; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
     box-sizing: border-box; /* 枠線を含んだ幅計算にする */
@@ -23,16 +23,16 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 }
 
 .input-group { 
-    margin-bottom: 15px; 
+    margin-bottom: 12px; 
     text-align: left; /* ラベルを左寄せに固定 */
     width: 100%;
 }
 
 label { 
     display: block; 
-    font-size: 13px; 
+    font-size: 12px; 
     color: #666; 
-    margin-bottom: 6px; 
+    margin-bottom: 4px; 
 }
 
 /* 入力欄の幅を100%に固定し、はみ出しを防ぐ */
@@ -46,11 +46,11 @@ select, input {
     display: block;
 }
 
-/* START GAMEボタン */
+/* START GAMEボタン 
 #start-button { 
     width: 100%; 
     padding: 15px; 
-    background-color: #FCA404; /* オレンジで統一 */
+    background-color: #FCA404; /* オレンジで統一 
     color: white; 
     border: none; 
     border-radius: 8px; 
@@ -58,10 +58,10 @@ select, input {
     font-weight: bold; 
     cursor: pointer; 
     margin-top: 20px;
-    box-sizing: border-box;
-}
+    box-sizing: border-box; 
+} */
 
-#setup-screen, #game-screen { width: 100%;    max-width: 600px;    margin: 0 auto;    text-align: center;}
+#game-screen { width: 100%;    max-width: 600px;    margin: 0 auto;    text-align: center;}
 
 /* ゲーム画面は JavaScript で表示を切り替えるので、最初は style="display: none;" で消しておきます */ 
 
@@ -92,10 +92,6 @@ select, input {
 .clear-flash { animation: clear-cyan 1.0s steps(2) 5; }
 
 /* 設定・ログインエリア */
-#setup-screen { width: 100%; max-width: 400px; margin: 20px 0; background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-.input-group { margin-bottom: 12px; }
-label { display: block; font-size: 12px; color: #666; margin-bottom: 4px; }
-select, input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
 button { width: 100%; padding: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 button:active { background-color: #FCA404; } 
 
@@ -132,12 +128,6 @@ button:disabled {background-color: #ebebeb;cursor: not-allowed;opacity: 0.7;}
 
 .ranking-btn:hover { background-color: #0056b3; }   /* 押した時に少し暗くする */
 
-/* 下にある大きなボタン用（任意） 
-.action-btn { width: 100%; padding: 12px; margin-top: 5px; border-radius: 8px; border: none;
-                font-weight: bold; background-color: #007bff; color: white; }
-
-.action-btn.secondary { background-color: #6c757d; }    /* Quitボタンなどはグレーに 
-*/
 
 
 /* 1. まず共通の土台を整える */

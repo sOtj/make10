@@ -284,17 +284,17 @@ function onCellClick(cell) {
             f.onclick = null;         // make the cell unavailable
             c.onclick = null;         // to avoid too many yellow cells
             playSound('correct');
-        //     f.classList.add('correct-flash'); c.classList.add('correct-flash');
-        //     setTimeout(() => {
+            f.classList.add('correct-pop'); c.classList.add('correct-pop');
+            setTimeout(() => {
                 document.querySelectorAll('.cell.latest').forEach(el => {
                     el.classList.replace('latest', 'hidden');
                 });
-        //         f.classList.remove('correct-flash', 'selected');
-        //         c.classList.remove('correct-flash', 'selected');
+                f.classList.remove('correct-pop', 'selected');
+                c.classList.remove('correct-pop', 'selected');
                 f.classList.remove('selected'); c.classList.remove('selected');
                 f.classList.add('latest'); c.classList.add('latest');
                 checkClear();
-        //     }, 3000);
+            }, 300);
         } else {
             errors++;
             document.getElementById('error-count').innerText = errors;

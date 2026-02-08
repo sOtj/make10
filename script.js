@@ -300,9 +300,9 @@ function onCellClick(cell) {
             document.getElementById('error-count').innerText = errors;
             playSound('wrong');
             f.classList.add('wrong-flash'); c.classList.add('wrong-flash');
-            // setTimeout(() => { 
+            setTimeout(() => { 
                 f.classList.remove('wrong-flash', 'selected'); c.classList.remove('wrong-flash', 'selected'); 
-            // }, 3000);
+            }, 300);
         }
         firstCell = null;
     }

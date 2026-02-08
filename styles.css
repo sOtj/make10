@@ -1,10 +1,10 @@
 :root { --bg: #f8f9fa; --primary: #007bff; --success: #28a745; --error: #dc3545; --hidden: #e0e0e0; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; display: flex; flex-direction: column; align-items: center; -webkit-user-select: none; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; -webkit-user-select: none; }
 
 /* 設定・ログインエリア（修正版） */
 #setup-screen { 
     width: 90%; 
-    max-width: 400px; 
+/*    max-width: 400px; */
     margin: 20px auto; 
     background-color: white; 
     padding: 25px; /* 少しパディングを増やしてゆとりを持たせる */
@@ -18,7 +18,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+/*    margin-bottom: 20px;  */
     width: 90%;
 }
 

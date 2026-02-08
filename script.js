@@ -636,7 +636,7 @@ async function fetchRanking(type) {
                               String(item.grade) === String(currentGrade));
 
                 // 2. テキストの設定 (1. 01:20 | abc - School gr1)
-                li.innerText = `${index + 1}. ${item.time} | ${item.name} - ${item.school} gr${item.grade}`;
+                li.innerText = `${index + 1}. ${item.time} | ${item.name} - ${item.school} ${item.grade}`;
 
                 // 3. 自分だったらスタイルを変更
                 if (isMe) {
@@ -652,12 +652,6 @@ async function fetchRanking(type) {
         rankingTitle.innerText = "Error loading ranking";
     }
 } // fetchRanking終了
-
-
-
-
-
-
 
 
 

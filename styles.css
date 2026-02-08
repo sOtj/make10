@@ -72,8 +72,6 @@ select, input {
 .stat-value { font-size: 18px; font-weight: bold; font-family: monospace; }
 
 /* 数値テーブル */
-/* #game-board { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; padding: 10px; width: 95vw; max-width: 450px; margin-top: 10px; } */
-/*#game-screen { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; padding: 10px; width: 95vw; max-width: 450px; margin-top: 10px; } */
 #game-screen { width: 100%; display: none; } /* game-screenでなくboardをgridにする */
 .cell { aspect-ratio: 1; background-color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.1s; }
 .cell.selected { background-color: #ffeb3b; transform: scale(0.9); }

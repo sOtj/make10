@@ -314,9 +314,9 @@ function shuffle(array) {
 let elapsedSeconds = 0; // 実際にプレイした秒数
 function updateTimer() {
     // モーダルが表示されている間はカウントアップしない
-    if (document.getElementById('custom-modal').style.display === 'flex') {
-        return; 
-    }
+    // if (document.getElementById('custom-modal').style.display === 'flex') {
+    //     return; 
+    // }
 
     const now = Date.now();
     const diff = now - startTime; // 開始時間からの差分（ミリ秒）

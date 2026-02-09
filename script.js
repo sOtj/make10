@@ -121,6 +121,9 @@ const helpMessage = `
     </div>
 `;
 
+let pausedTime = 0;
+let totalPausedDuration = 0; // 中断した時間の合計
+
 // ***** Initializing game variables
 let firstCell = null, startTime = 0, timerInterval = null, errors = 0;
 const board = document.getElementById('game-board');
@@ -265,6 +268,7 @@ function startGameLogic() {
     
     // 3. 以前のタイマーがあれば止めて、新しく開始
     startTime = Date.now();
+    totalPausedDuration = 0; // リセット
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 1000);
 
@@ -534,6 +538,20 @@ function showModal(message, isClear = false) {
 
 function closeModal() {
     document.getElementById('custom-modal').style.display = 'none';
+    const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
+    
+    // ゲーム中ならタイマーを再開
+    if (!setupVisible) {
+        // 3. 止まっていた時間を計算して加算
+        const duration = Date.now() - pausedTime;
+        totalPausedDuration += duration;
+        
+        // 4. 開始時刻を「止まっていた分」だけ後ろにずらす
+        startTime += duration;
+        
+        // 5. タイマーの画面更新を再開
+        timerInterval = setInterval(updateTimer, 1000);
+    }
 }
 
 function restartGame() {
@@ -799,8 +817,12 @@ function showHelp() {
 //         <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
 //     </div>
 // `;
-
-    showModal(helpMessage);
+        // 1. タイマー（画面更新）を止める
+        clearInterval(timerInterval);
+        // 2. 止めた瞬間の時刻を記録
+        pausedTime = Date.now();
+    
+        showModal(helpMessage);
 }
 
 

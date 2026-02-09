@@ -121,6 +121,8 @@ const helpMessage = `
     </div>
 `;
 
+let elapsedSeconds = 0; // 実際にプレイした秒数
+
 let pausedTime = 0;
 let totalPausedDuration = 0; // 中断した時間の合計
 
@@ -267,8 +269,9 @@ function startGameLogic() {
     document.getElementById('timer').innerText = "00:00";
     
     // 3. 以前のタイマーがあれば止めて、新しく開始
-    startTime = Date.now();
-    totalPausedDuration = 0; // リセット
+    // startTime = Date.now();
+    // totalPausedDuration = 0; // リセット
+    elapsedSeconds = 0; // リセット
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 1000);
 
@@ -311,26 +314,26 @@ function shuffle(array) {
     });
 }
 */    
-let elapsedSeconds = 0; // 実際にプレイした秒数
 function updateTimer() {
     // モーダルが表示されている間はカウントアップしない
-    // if (document.getElementById('custom-modal').style.display === 'flex') {
-    //     return; 
-    // }
+    if (document.getElementById('custom-modal').style.display === 'flex') {
+        return; 
+    }
+    elapsedSeconds++; // 1秒増やす
+    // const now = Date.now();
+    // const diff = now - startTime; // 開始時間からの差分（ミリ秒）
 
-    const now = Date.now();
-    const diff = now - startTime; // 開始時間からの差分（ミリ秒）
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = elapsedSeconds % 60;
 
-    const minutes = Math.floor(diff / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-
-    // 00:00 の形式に整えて表示
-    const displayTime = 
-        String(minutes).padStart(2, '0') + ":" + 
-        String(seconds).padStart(2, '0');
+    // // 00:00 の形式に整えて表示
+    // const displayTime = 
+    //     String(minutes).padStart(2, '0') + ":" + 
+    //     String(seconds).padStart(2, '0');
     
-    document.getElementById('timer').innerText = displayTime;
-}
+    document.getElementById('timer').innerText = String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+};
+
 
 function onCellClick(cell) {
     if (cell.classList.contains('hidden') || cell.classList.contains('latest')) return;
@@ -834,7 +837,7 @@ function showHelp() {
         clearInterval(timerInterval);
         // 2. 止めた瞬間の時刻を記録
         pausedTime = Date.now();
-    console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
+console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
         showModal(helpMessage);
 }
 

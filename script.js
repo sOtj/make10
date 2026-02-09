@@ -548,7 +548,8 @@ function closeModal() {
     // ゲーム中ならタイマーを再開
     if (!setupVisible) {
         // 3. 止まっていた時間を計算して加算
-        const duration = Date.now() - pausedTime;
+        const now = Date.now()
+        const duration = now - pausedTime;
 
 console.log("② 現在時刻:", now);
 console.log("③ 中断していたミリ秒 (duration):", duration);

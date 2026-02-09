@@ -311,8 +311,13 @@ function shuffle(array) {
     });
 }
 */    
-
+let elapsedSeconds = 0; // 実際にプレイした秒数
 function updateTimer() {
+    // モーダルが表示されている間はカウントアップしない
+    if (document.getElementById('custom-modal').style.display === 'flex') {
+        return; 
+    }
+
     const now = Date.now();
     const diff = now - startTime; // 開始時間からの差分（ミリ秒）
 
@@ -544,10 +549,17 @@ function closeModal() {
     if (!setupVisible) {
         // 3. 止まっていた時間を計算して加算
         const duration = Date.now() - pausedTime;
+
+console.log("② 現在時刻:", now);
+console.log("③ 中断していたミリ秒 (duration):", duration);
+
+
         totalPausedDuration += duration;
         
         // 4. 開始時刻を「止まっていた分」だけ後ろにずらす
+console.log("④ ずらす前の startTime:", startTime);
         startTime += duration;
+console.log("⑤ ずらした後の startTime:", startTime);
         
         // 5. タイマーの画面更新を再開
         timerInterval = setInterval(updateTimer, 1000);
@@ -821,7 +833,7 @@ function showHelp() {
         clearInterval(timerInterval);
         // 2. 止めた瞬間の時刻を記録
         pausedTime = Date.now();
-    
+    console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
         showModal(helpMessage);
 }
 

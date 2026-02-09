@@ -76,31 +76,48 @@ const schoolMaster = [
     {id:7047, name:"Vooruit Primary", circuit:"Otjiwarongo", sorp:"S", cluster:"Orwetoveni", ur:"U"}
 ];
 
+// const helpMessage = `
+//     <div style="text-align: center; margin-bottom: 15px;">
+//         <h2 style="margin: 0; color: #333;">How To Play</h2>
+//     </div>
+//     <div style="text-align: left; font-size: 15px; line-height: 1.4;">
+//         <p><b>1. School & Grade</b><br>Select from the lists.</p>
+        
+//         <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
+        
+//         <p><b>3. Password</b><br>Enter your 4-digit number.</p>
+        
+//         <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
+        
+//         <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
+//             <div style="margin-bottom: 15px;">
+//                 <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
+//                 <br><small>Pick one (Yellow! 🟡)</small>
+//             </div>
+//             <div>
+//                 <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
+//                 <br><small>Match for 10 (Blue! 🔵)</small>
+//             </div>
+//         </div>
+
+//         <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
+//     </div>
+// `;
 const helpMessage = `
-    <div style="text-align: center; margin-bottom: 15px;">
-        <h2 style="margin: 0; color: #333;">How To Play</h2>
-    </div>
-    <div style="text-align: left; font-size: 15px; line-height: 1.4;">
-        <p><b>1. School & Grade</b><br>Select from the lists.</p>
+    <div style="text-align: center; font-size: 14px; line-height: 1.4;">
+        <h3 style="margin-bottom: 10px;">How To Play</h3>
         
-        <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
-        
-        <p><b>3. Password</b><br>Enter your 4-digit number.</p>
-        
-        <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
-        
-        <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
-            <div style="margin-bottom: 15px;">
-                <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
-                <br><small>Pick one (Yellow! 🟡)</small>
-            </div>
-            <div>
-                <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
-                <br><small>Match for 10 (Blue! 🔵)</small>
-            </div>
+        <div style="text-align: left; display: inline-block;">
+            <p>1. <b>Register:</b> Any name is OK! ✨</p>
+            <p>2. <b>Pass:</b> Enter 4-digits.</p>
+            <p>3. <b>Game:</b> Make 10! (3+7, 5+5...)</p>
         </div>
 
-        <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
+        <div class="image-container" style="position: relative; width: 100%; height: 120px; margin-top: 10px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
+            <img src="mk10m12.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+            <img src="mk10m22.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+        </div>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;">Wait 2 seconds to see the next step!</p>
     </div>
 `;
 

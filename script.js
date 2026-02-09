@@ -76,6 +76,34 @@ const schoolMaster = [
     {id:7047, name:"Vooruit Primary", circuit:"Otjiwarongo", sorp:"S", cluster:"Orwetoveni", ur:"U"}
 ];
 
+const helpMessage = `
+    <div style="text-align: center; margin-bottom: 15px;">
+        <h2 style="margin: 0; color: #333;">How To Play</h2>
+    </div>
+    <div style="text-align: left; font-size: 15px; line-height: 1.4;">
+        <p><b>1. School & Grade</b><br>Select from the lists.</p>
+        
+        <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
+        
+        <p><b>3. Password</b><br>Enter your 4-digit number.</p>
+        
+        <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
+        
+        <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
+            <div style="margin-bottom: 15px;">
+                <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
+                <br><small>Pick one (Yellow! 🟡)</small>
+            </div>
+            <div>
+                <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
+                <br><small>Match for 10 (Blue! 🔵)</small>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
+    </div>
+`;
+
 // ***** Initializing game variables
 let firstCell = null, startTime = 0, timerInterval = null, errors = 0;
 const board = document.getElementById('game-board');
@@ -727,33 +755,33 @@ function showHelp() {
    
 // Good luck! 🍀`;
 
-const helpMessage = `
-    <div style="text-align: center; margin-bottom: 15px;">
-        <h2 style="margin: 0; color: #333;">How To Play</h2>
-    </div>
-    <div style="text-align: left; font-size: 15px; line-height: 1.4;">
-        <p><b>1. School & Grade</b><br>Select from the lists.</p>
+// const helpMessage = `
+//     <div style="text-align: center; margin-bottom: 15px;">
+//         <h2 style="margin: 0; color: #333;">How To Play</h2>
+//     </div>
+//     <div style="text-align: left; font-size: 15px; line-height: 1.4;">
+//         <p><b>1. School & Grade</b><br>Select from the lists.</p>
         
-        <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
+//         <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
         
-        <p><b>3. Password</b><br>Enter your 4-digit number.</p>
+//         <p><b>3. Password</b><br>Enter your 4-digit number.</p>
         
-        <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
+//         <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
         
-        <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
-            <div style="margin-bottom: 15px;">
-                <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
-                <br><small>Pick one (Yellow! 🟡)</small>
-            </div>
-            <div>
-                <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
-                <br><small>Match for 10 (Blue! 🔵)</small>
-            </div>
-        </div>
+//         <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
+//             <div style="margin-bottom: 15px;">
+//                 <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
+//                 <br><small>Pick one (Yellow! 🟡)</small>
+//             </div>
+//             <div>
+//                 <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
+//                 <br><small>Match for 10 (Blue! 🔵)</small>
+//             </div>
+//         </div>
         
-        <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
-    </div>
-`;
+//         <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
+//     </div>
+// `;
 
     showModal(helpMessage);
 }

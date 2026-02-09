@@ -112,11 +112,6 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
     const grade = document.getElementById('grade-list').value;
     const password = document.getElementById('user-pass').value;
 
-    if(!name) { 
-        showModal("Enter your name!");
-        playSound('wrong');
-        return; 
-    }
     if(!school) { 
         showModal("Select your school!");
         playSound('wrong');
@@ -124,6 +119,11 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
     }
     if(!grade) { 
         showModal("Select your grade!");
+        playSound('wrong');
+        return; 
+    }
+    if(!name) { 
+        showModal("Enter your name!");
         playSound('wrong');
         return; 
     }
@@ -148,8 +148,8 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
     btn.disabled = true;
     const originalText = btn.innerText;
     btn.innerText = "Connecting...";
-
 // ログイン（ベストタイム取得）
+
     try{
         const response = await fetch(GAS_URL, {
             method: "POST",
@@ -170,8 +170,13 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
             return;
         }
 // +++++++++++++++++++
+// --- 追加：新規ユーザーならヘルプを表示 ---
+        if (result.data.isNew) {
+            showModal(helpMessage);
+        }
+// +++++++++++++++++++
         // result.data が長い日付形式だったら、分:秒 だけを抜き出す
-        let displayBest = result.data;
+        let displayBest = result.data.time;
         if (displayBest.includes('T')) {
             const timeMatch = displayBest.match(/(\d{2}:\d{2})/); // "11:58" のような部分を探す
             displayBest = timeMatch ? timeMatch[0] : displayBest;

@@ -170,21 +170,21 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
             return;
         }
 // +++++++++++++++++++
-// --- 追加：新規ユーザーならヘルプを表示 ---
-        if (result.data.isNew) {
-            showModal(helpMessage);
-        }
-// +++++++++++++++++++
         // result.data が長い日付形式だったら、分:秒 だけを抜き出す
         let displayBest = result.data.time;
-        if (displayBest.includes('T')) {
+        if (typeof displayBest === 'string' && displayBest.includes('T')) {
             const timeMatch = displayBest.match(/(\d{2}:\d{2})/); // "11:58" のような部分を探す
             displayBest = timeMatch ? timeMatch[0] : displayBest;
         }
 // +++++++++++++++++++
         document.getElementById('best-time').innerText = displayBest;     // ベストタイムを表示
 //        document.getElementById('best-time').innerText = result.data;     // ベストタイムを表示
-
+// +++++++++++++++++++
+// --- 追加：新規ユーザーならヘルプを表示 ---
+        if (result.data.isNew) {
+            showModal(helpMessage);
+        }
+// +++++++++++++++++++
         // ゲーム開始の準備
        document.getElementById('setup-screen').style.display = 'none'; // 設定画面を隠す
         startGameLogic(); // 実際のゲーム開始処理（セル生成など）を別関数に切り出すと綺麗です

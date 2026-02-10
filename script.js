@@ -76,33 +76,7 @@ const schoolMaster = [
     {id:7047, name:"Vooruit Primary", circuit:"Otjiwarongo", sorp:"S", cluster:"Orwetoveni", ur:"U"}
 ];
 
-// const helpMessage = `
-//     <div style="text-align: center; margin-bottom: 15px;">
-//         <h2 style="margin: 0; color: #333;">How To Play</h2>
-//     </div>
-//     <div style="text-align: left; font-size: 15px; line-height: 1.4;">
-//         <p><b>1. School & Grade</b><br>Select from the lists.</p>
-        
-//         <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
-        
-//         <p><b>3. Password</b><br>Enter your 4-digit number.</p>
-        
-//         <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
-        
-//         <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
-//             <div style="margin-bottom: 15px;">
-//                 <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
-//                 <br><small>Pick one (Yellow! 🟡)</small>
-//             </div>
-//             <div>
-//                 <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
-//                 <br><small>Match for 10 (Blue! 🔵)</small>
-//             </div>
-//         </div>
 
-//         <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
-//     </div>
-// `;
 const helpMessage = `
     <div style="text-align: center; font-size: 14px; line-height: 1.4;">
         <h3 style="margin-bottom: 10px;">How To Play</h3>
@@ -121,16 +95,14 @@ const helpMessage = `
     </div>
 `;
 
-// let elapsedSeconds = 0; // 実際にプレイした秒数
-
-let pausedTime = 0;
+let startTime;               // ゲームを始めた瞬間の時刻
+let pausedStartTime;         // 一時停止（モーダルを開いた）瞬間の時刻
+let totalPausedDuration = 0;   // 合計で何ミリ秒止まっていたか
+let timerInterval;           // setIntervalの入れ物// let elapsedSeconds = 0; // 実際にプレイした秒数
 let isPaused = false;
-let totalPausedDuration = 0; // 中断した時間の合計
 
-let startTime; // 開始した時刻
-let elapsedTime = 0; // それまでに経過した合計時間（ミリ秒）
-let timerInterval;
-
+// let pausedTime = 0;         //？？必要？？
+// let elapsedTime = 0; // ？？それまでに経過した合計時間（ミリ秒）必要？？
 
 // startTime = 0, 
 timerInterval = null;
@@ -425,20 +397,6 @@ function checkNewRecord(currentTimeStr) {
     return currentSec < lastBestSec;
 }
 
-function timeToSec(t) {
-    if (!t || t === "--:--") return 9999;
-    
-    // スプレッドシートが日付形式（2026-01...T11:58...）で返してきた場合の対策
-    if (t.includes('T')) {
-        const timePart = t.split('T')[1]; // "11:58:00.000Z"
-        const parts = timePart.split(':');
-        return parseInt(parts[0]) * 60 + parseInt(parts[1]); // 分と秒を取得
-    }
-    
-    // 通常の "01:23" 形式の場合
-    const p = t.split(':');
-    return parseInt(p[0]) * 60 + parseInt(p[1]);
-}
 
 // // 終了時の保存処理を修正
 // async function saveResult(time, err) {
@@ -525,30 +483,22 @@ async function saveResult(time, err) {
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {
+    if (isPaused) return; // 二重実行防止
+    isPaused = true;
+    pausedStartTime = Date.now(); // ★追加：止めた瞬間を記録
+    clearInterval(timerInterval); // ★追加：表示の更新も止める
+    // pauseTimer();
+
     const modal = document.getElementById('custom-modal');
     const msgArea = document.getElementById('modal-message');
     const btnArea = document.getElementById('modal-buttons');
     const rankingArea = document.getElementById('ranking-area');
-
-    if (isPaused) return; // 二重実行防止
-console.warn("ShowModal - isPausedの値:", isPaused);
-    isPaused = true;
-    // pausedTime = Date.now(); 
-    pauseTimer();
 
     // CSSの display:none を打ち消すために flex を指定
     modal.style.display = 'flex'; 
 //    msgArea.innerText = message;
     msgArea.innerHTML = message;
     rankingArea.style.display = 'none';
-    
-    // modal.classList.add('active'); // CSSで .active { display: flex; } と定義しておく
-
-    // modal.style.display = 'flex';   // centering
-    // msgArea.innerText = message;
-    // rankingArea.style.display = 'none';     // hide ranking at the beginning
-
-console.warn("chkTiming - isClearの値:", isClear);
     
     if (isClear) {        // cleared all the cards
         btnArea.innerHTML = `
@@ -562,66 +512,92 @@ console.warn("chkTiming - isClearの値:", isClear);
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
     } else {            // 通常のエラー時はOKボタンだけ表示
-console.warn("notDone - ShowModal - isPausedの値:", isPaused);
         btnArea.innerHTML = `<button class="action-btn secondary" onclick="closeModal()">OK</button>`;
     }
 }
 
 function closeModal() {
-console.log("closeModalが呼ばれました");
-    // if (!isPaused) return;
-    if (!isPaused) {
-console.warn("一時停止状態ではないため、処理を中断しました。isPausedの値:", isPaused);
-        // 実はここで return せずに進めてしまったほうが、
-        // 万が一の時でも「モーダルが閉じない」事態は防げます。
-    }
-    // const resumeTime = Date.now();
-    // const duration = resumeTime - pausedTime;   //中断時間の算出
-// console.log("② 再開までの時間経過(ms):", duration);
+// console.log("closeModalが呼ばれました");
+//     // if (!isPaused) return;
+//     if (!isPaused) {
+// console.warn("一時停止状態ではないため、処理を中断しました。isPausedの値:", isPaused);
+//         // 実はここで return せずに進めてしまったほうが、
+//         // 万が一の時でも「モーダルが閉じない」事態は防げます。
+//     }
+//     // const resumeTime = Date.now();
+//     // const duration = resumeTime - pausedTime;   //中断時間の算出
+// // console.log("② 再開までの時間経過(ms):", duration);
 
-        //  開始時刻を「止まっていた分」だけ後ろにずらす
-console.log("④ ずらす前の startTime:", startTime);
-    // startTime += duration;
-console.log("⑤ ずらした後の startTime:", startTime);
-    isPaused = false;
-    // pausedTime = 0; // リセットしておく
-    resumeTimer();
+//         //  開始時刻を「止まっていた分」だけ後ろにずらす
+// console.log("④ ずらす前の startTime:", startTime);
+//     // startTime += duration;
+// console.log("⑤ ずらした後の startTime:", startTime);
+//     isPaused = false;
+//     // pausedTime = 0; // リセットしておく
+//     resumeTimer();
 
-    // //　モーダルを閉じる
-    // document.getElementById('custom-modal').style.display = 'none';
-    // // document.getElementById('helpmodal').style.display = 'none';
+//     // //　モーダルを閉じる
+//     // document.getElementById('custom-modal').style.display = 'none';
+//     // // document.getElementById('helpmodal').style.display = 'none';
 
-// --- モーダルを閉じる（安全な書き方） ---
-    const modal = document.getElementById('custom-modal'); // ここ、ID合ってますか？
-    if (modal) {
-        modal.style.display = 'none';
-        console.log("モーダルを非表示にしました");
-    } else {
-        console.error("エラー: 'custom-modal' というIDの要素が見つかりません！");
-    }
-
-//     const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
-//     // ゲーム中ならタイマーを再開
-//     if (!setupVisible) {
-// console.log("③ 中断していたミリ秒 (duration):", duration);
-//         totalPausedDuration += duration;
-//         // 5. タイマーの画面更新を再開
-//         timerInterval = setInterval(updateTimer, 1000);
+// // --- モーダルを閉じる（安全な書き方） ---
+//     const modal = document.getElementById('custom-modal'); // ここ、ID合ってますか？
+//     if (modal) {
+//         modal.style.display = 'none';
+//         console.log("モーダルを非表示にしました");
+//     } else {
+//         console.error("エラー: 'custom-modal' というIDの要素が見つかりません！");
 //     }
 
-// --- セットアップ画面の判定 ---
-    const setupScreen = document.getElementById('setup-screen');
-    if (setupScreen) {
-        const setupVisible = setupScreen.style.display !== 'none';
-        if (!setupVisible) {
-            console.log("③ タイマーを再開します。中断時間:", duration);
-            totalPausedDuration += duration;
-            // 二重タイマー防止のため、一度クリアしてからセット
-            clearInterval(timerInterval); 
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-    }
+// //     const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
+// //     // ゲーム中ならタイマーを再開
+// //     if (!setupVisible) {
+// // console.log("③ 中断していたミリ秒 (duration):", duration);
+// //         totalPausedDuration += duration;
+// //         // 5. タイマーの画面更新を再開
+// //         timerInterval = setInterval(updateTimer, 1000);
+// //     }
 
+// // --- セットアップ画面の判定 ---
+//     const setupScreen = document.getElementById('setup-screen');
+//     if (setupScreen) {
+//         const setupVisible = setupScreen.style.display !== 'none';
+//         if (!setupVisible) {
+//             console.log("③ タイマーを再開します。中断時間:", duration);
+//             totalPausedDuration += duration;
+//             // 二重タイマー防止のため、一度クリアしてからセット
+//             clearInterval(timerInterval); 
+//             timerInterval = setInterval(updateTimer, 1000);
+//         }
+//     }
+// ----------------------------------
+// 1. モーダルを消す（UIの役割）
+    const modal = document.getElementById('custom-modal');
+    if (modal) modal.style.display = 'none';
+
+    // 2. 停止状態なら、計算を再開させる（ロジックの役割）
+    if (isPaused) {
+        isPaused = false;
+        resumeTimer(); // ここで停止時間の加算とsetIntervalが行われる
+    }
+// ----------------------------------
+    if (!isPaused) return;
+
+    // ★今回の停止時間を計算して、合計に足す
+    const duration = Date.now() - pausedStartTime;
+    totalPausedDuration += duration;
+    
+    isPaused = false;
+
+    // モーダルを閉じる
+    document.getElementById('custom-modal').style.display = 'none';
+
+    // セットアップ画面でなければタイマーを再始動
+    const setupScreen = document.getElementById('setup-screen');
+    if (setupScreen && setupScreen.style.display === 'none') {
+        clearInterval(timerInterval); 
+        timerInterval = setInterval(updateTimer, 1000);
+    }
 }
 
 function restartGame() {
@@ -786,15 +762,65 @@ document.getElementById('help-btn').onclick = () => {
 
 
 
-// ヘルプを開くとき
-function pauseTimer() {
-  clearInterval(timerInterval);
-  // 現在時刻 - 開始時刻 をして、これまでの経過時間を保存
-  elapsedTime += Date.now() - startTime;
+// // ヘルプを開くとき
+// function pauseTimer() {
+//   clearInterval(timerInterval);
+//   // 現在時刻 - 開始時刻 をして、これまでの経過時間を保存
+//   elapsedTime += Date.now() - startTime;
+// }
+
+// // ヘルプを閉じて再開するとき
+// function resumeTimer() {
+//   startTime = Date.now(); // 今の時刻を新しい開始時刻にする
+//   timerInterval = setInterval(updateTimer, 10);
+// }
+
+// 1. ゲーム開始時
+function startTimer() {
+    startTime = Date.now();
+    totalPausedDuration = 0; // リセット
+    timerInterval = setInterval(updateTimer, 1000);
 }
 
-// ヘルプを閉じて再開するとき
+// 2. 一時停止（モーダルを開くときなど）
+function pauseTimer() {
+    clearInterval(timerInterval);
+    pausedStartTime = Date.now(); // 「いつ止めたか」を記録
+}
+
+// 3. 再開（closeModalの中から呼ぶ）
 function resumeTimer() {
-  startTime = Date.now(); // 今の時刻を新しい開始時刻にする
-  timerInterval = setInterval(updateTimer, 10);
+    const duration = Date.now() - pausedStartTime; // 今回止まっていた時間を計算
+    totalPausedDuration += duration;               // 累計停止時間に加算
+    
+    // 再び1秒おきに表示更新を開始
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+// 4. 計算と表示（1秒ごとに勝手に動く）
+function updateTimer() {
+    const now = Date.now();
+    // 【公式】経過時間 = 今 - 開始時 - 止まってた合計
+    const diffInMs = now - startTime - totalPausedDuration;
+    
+    const totalSeconds = Math.floor(diffInMs / 1000);
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+
+    document.getElementById('timer').innerText = 
+        String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
+}
+
+// 5. 変換ツール（計算には直接関与せず、データの整形用）
+function timeToSec(t) {
+    if (!t || t === "--:--") return 9999;
+    // スプレッドシートが日付形式（2026-01...T11:58...）で返してきた場合の対策
+    if (t.includes('T')) {
+        const timePart = t.split('T')[1]; // "11:58:00.000Z"
+        const parts = timePart.split(':');
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]); // 分と秒を取得
+    }
+    // 通常の "01:23" 形式の場合
+    const p = t.split(':');
+    return parseInt(p[0]) * 60 + parseInt(p[1]);
 }

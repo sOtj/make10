@@ -293,7 +293,7 @@ button:disabled {background-color: #ebebeb;cursor: not-allowed;opacity: 0.7;}
 }
 
 /* 押し心地を出すための演出 */
-.help-btn-small:active {
+.helpBtnGame:active {
     background-color: #888;
     transform: scale(1.1);
 }

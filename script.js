@@ -660,10 +660,6 @@ async function fetchRanking(type) {
 } // fetchRanking終了
 
 
-
-
-
-
 // 入力状況を監視して、3つ揃ったらボタンを青く（有効に）する
 function checkFormCompletion() {
     const c = document.getElementById('circuit-filter').value;

@@ -538,7 +538,7 @@ console.warn("ShowModal - isPausedの値:", isPaused);
     // msgArea.innerText = message;
     // rankingArea.style.display = 'none';     // hide ranking at the beginning
 
-    console.warn("chkTiming - isClearの値:", isClear);
+console.warn("chkTiming - isClearの値:", isClear);
     
     if (isClear) {        // cleared all the cards
         btnArea.innerHTML = `

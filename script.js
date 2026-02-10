@@ -77,21 +77,39 @@ const schoolMaster = [
 ];
 
 
-const helpMessage = `
+// const helpMessage = `
+const helpMsgReg = `
     <div style="text-align: center; font-size: 14px; line-height: 1.4;">
-        <h3 style="margin-bottom: 10px;">How To Play</h3>
+        <h3 style="margin-bottom: 10px;">How To Register</h3>
         
         <div style="text-align: left; display: inline-block;">
-            <p>1. <b>Register:</b> Any name is OK! ✨</p>
-            <p>2. <b>Pass:</b> Enter 4-digits.</p>
-            <p>3. <b>Game:</b> Make 10! (3+7, 5+5...)</p>
+            <p>1. <b>Register:</b> Choose your school and grade ✨</p>
+            <p>2. <b>Pass:</b> You can name whatever you want <br> if it is unique in your school / grade </p>
+            <p>3. <b>Game:</b> Enter 4-digits. Make 10! (3+7, 5+5...)</p>
         </div>
 
         <div class="image-container" style="position: relative; width: 100%; height: 120px; margin-top: 10px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
             <img src="mk10m12.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
             <img src="mk10m22.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
         </div>
-        <p style="font-size: 12px; color: #666; margin-top: 5px;">Wait 2 seconds to see the next step!</p>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;">Don't forget your password!!</p>
+    </div>
+`;
+const helpMsgGame = `
+    <div style="text-align: center; font-size: 14px; line-height: 1.4;">
+        <h3 style="margin-bottom: 10px;">How To Play</h3>
+        
+        <div style="text-align: left; display: inline-block;">
+            <p>1. <b>Register:</b> Choose any available number ✨</p>
+            <p>2. <b>Pass:</b> You can name whatever you want <br> if it is unique in your school / grade </p>
+            <p>3. <b>Game:</b> Enter 4-digits. Make 10! (3+7, 5+5...)</p>
+        </div>
+
+        <div class="image-container" style="position: relative; width: 100%; height: 120px; margin-top: 10px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
+            <img src="mk10m12.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+            <img src="mk10m22.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+        </div>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;">You can see this by clicking [?] button at the top-right</p>
     </div>
 `;
 
@@ -214,7 +232,7 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
 // +++++++++++++++++++
 // --- 追加：新規ユーザーならヘルプを表示 ---
         if (result.data.isNew) {
-            showModal(helpMessage);
+            showModal(helpMsgGame);
         }
 // +++++++++++++++++++
         // ゲーム開始の準備
@@ -736,28 +754,28 @@ async function handleCheckNames() {
     document.getElementById('check-names-btn').onclick = handleCheckNames;
 
 // 1. ヘルプを表示する専用の関数を定義
-function showHelp() {
+// function showHelp() {
 
-    if (isPaused) return; // 二重実行防止
+//     if (isPaused) return; // 二重実行防止
 
-    isPaused = true;
-    pausedTime = Date.now(); 
+//     isPaused = true;
+//     pausedTime = Date.now(); 
   
-console.log("① 中断した時刻:", pausedTime);
-//         // 1. タイマー（画面更新）を止める
-//         clearInterval(timerInterval);
-//         // 2. 止めた瞬間の時刻を記録
-//         pausedTime = Date.now();
-// console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
-//         showModal(helpMessage);
+// console.log("① 中断した時刻:", pausedTime);
+// //         // 1. タイマー（画面更新）を止める
+// //         clearInterval(timerInterval);
+// //         // 2. 止めた瞬間の時刻を記録
+// //         pausedTime = Date.now();
+// // console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
+// //         showModal(helpMessage);
 
-    document.getElementById('custom-Modal').style.display = 'block';
-}
+//     document.getElementById('custom-Modal').style.display = 'block';
+// }
 
 // 2. ? ボタンをクリックした時にその関数を呼び出すように設定
 // document.getElementById('help-btn').onclick = showHelp;
 document.getElementById('help-btn').onclick = () => {
-    showModal(helpMessage);
+    showModal(helpMsgReg);
 };
 
 

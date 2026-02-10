@@ -796,5 +796,5 @@ function pauseTimer() {
 // ヘルプを閉じて再開するとき
 function resumeTimer() {
   startTime = Date.now(); // 今の時刻を新しい開始時刻にする
-  timerInterval = setInterval(updateDisplay, 10);
+  timerInterval = setInterval(updateTimer, 10);
 }

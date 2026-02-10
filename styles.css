@@ -129,7 +129,8 @@ select, input {
 .clear-flash { animation: clear-cyan 1.0s steps(2) 5; }
 
 /* 設定・ログインエリア */
-button { width: 100%; padding: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+/* button { width: 100%; padding: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; } */
+button { width: 100%; padding: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
 button:active { background-color: #FCA404; } 
 
 /* ボタンが無効（disabled）の時のスタイル */

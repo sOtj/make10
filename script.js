@@ -577,7 +577,7 @@ console.warn("一時停止状態ではないため、処理を中断しました
     }
     // const resumeTime = Date.now();
     // const duration = resumeTime - pausedTime;   //中断時間の算出
-console.log("② 再開までの時間経過(ms):", duration);
+// console.log("② 再開までの時間経過(ms):", duration);
 
         //  開始時刻を「止まっていた分」だけ後ろにずらす
 console.log("④ ずらす前の startTime:", startTime);

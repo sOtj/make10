@@ -549,6 +549,7 @@ function showModal(message, isClear = false) {
 }
 
 function closeModal() {
+console.log("closeModalが呼ばれました");
     if (!isPaused) return;
     const resumeTime = Date.now();
     const duration = resumeTime - pausedTime;   //中断時間の算出

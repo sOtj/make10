@@ -127,8 +127,11 @@ let pausedTime = 0;
 let isPaused = false;
 let totalPausedDuration = 0; // 中断した時間の合計
 
+// startTime = 0, 
+timerInterval = null,
+
 // ***** Initializing game variables
-let firstCell = null, startTime = 0, timerInterval = null, errors = 0;
+let firstCell = null, errors = 0;
 const board = document.getElementById('game-board');
 
 function updateSchoolList() {   // ***** Filtering the school list by circuit
@@ -524,7 +527,8 @@ function showModal(message, isClear = false) {
     if (isPaused) return; // 二重実行防止
 console.warn("ShowModal - isPausedの値:", isPaused);
     isPaused = true;
-    pausedTime = Date.now(); 
+    // pausedTime = Date.now(); 
+    pauseTimer();
 
     // CSSの display:none を打ち消すために flex を指定
     modal.style.display = 'flex'; 
@@ -565,16 +569,17 @@ console.warn("一時停止状態ではないため、処理を中断しました
         // 実はここで return せずに進めてしまったほうが、
         // 万が一の時でも「モーダルが閉じない」事態は防げます。
     }
-    const resumeTime = Date.now();
-    const duration = resumeTime - pausedTime;   //中断時間の算出
+    // const resumeTime = Date.now();
+    // const duration = resumeTime - pausedTime;   //中断時間の算出
 console.log("② 再開までの時間経過(ms):", duration);
 
         //  開始時刻を「止まっていた分」だけ後ろにずらす
 console.log("④ ずらす前の startTime:", startTime);
-    startTime += duration;
+    // startTime += duration;
 console.log("⑤ ずらした後の startTime:", startTime);
     isPaused = false;
-    pausedTime = 0; // リセットしておく
+    // pausedTime = 0; // リセットしておく
+    resumeTimer();
 
     // //　モーダルを閉じる
     // document.getElementById('custom-modal').style.display = 'none';
@@ -772,3 +777,21 @@ console.log("① 中断した時刻:", pausedTime);
 document.getElementById('help-btn').onclick = () => {
     showModal(helpMessage);
 };
+
+
+let startTime; // 開始した時刻
+let elapsedTime = 0; // それまでに経過した合計時間（ミリ秒）
+let timerInterval;
+
+// ヘルプを開くとき
+function pauseTimer() {
+  clearInterval(timerInterval);
+  // 現在時刻 - 開始時刻 をして、これまでの経過時間を保存
+  elapsedTime += Date.now() - startTime;
+}
+
+// ヘルプを閉じて再開するとき
+function resumeTimer() {
+  startTime = Date.now(); // 今の時刻を新しい開始時刻にする
+  timerInterval = setInterval(updateDisplay, 10);
+}

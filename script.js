@@ -316,18 +316,21 @@ function shuffle(array) {
 */    
 function updateTimer() {
     // モーダルが表示されている間はカウントアップしない
-    if (document.getElementById('custom-modal').style.display === 'flex') {
-        // モーダルが開いている間は「一時停止時間」が蓄積されるように工夫が必要ですが、
-        // 簡易的には「表示を更新しない」だけでOKです。
-        return; 
-    }
+    // if (document.getElementById('custom-modal').style.display === 'flex') {
+    //     // モーダルが開いている間は「一時停止時間」が蓄積されるように工夫が必要ですが、
+    //     // 簡易的には「表示を更新しない」だけでOKです。
+    //     return; 
+    // }
+    // ★重要：一時停止フラグが true の時は、これ以降の処理をしない
+    if (isPaused) return;
+
     // elapsedSeconds++; // 1秒増やす　!!!誤差が出るので使用不可!!!
     // 現在時刻と開始時刻の差分（ミリ秒）を計算
     const now = Date.now();
-    const diffInMs = now - startTime - pausedTime; // 
-    const diffInSec = now - Math.floor(diffInMs / 1000); // 
-    const minutes = Math.floor(diffInSec / 60);
-    const seconds = diffInSec % 60;
+    const diffInMs = now - startTime - totalPausedDuration; // 
+    const totalSeconds = now - Math.floor(diffInMs / 1000); // 
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
 
     // // 00:00 の形式に整えて表示
     const displayTime = 

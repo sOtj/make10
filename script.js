@@ -521,10 +521,9 @@ function showModal(message, isClear = false) {
     const rankingArea = document.getElementById('ranking-area');
 
     if (isPaused) return; // 二重実行防止
-console.warn("at ShowModal - isPausedの値:", isPaused);
+console.warn("ShowModal - isPausedの値:", isPaused);
     isPaused = true;
     pausedTime = Date.now(); 
-
 
     // CSSの display:none を打ち消すために flex を指定
     modal.style.display = 'flex'; 
@@ -550,6 +549,7 @@ console.warn("at ShowModal - isPausedの値:", isPaused);
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
     } else {            // 通常のエラー時はOKボタンだけ表示
+console.warn("notDone - ShowModal - isPausedの値:", isPaused);
         btnArea.innerHTML = `<button class="action-btn secondary" onclick="closeModal()">OK</button>`;
     }
 }

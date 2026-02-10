@@ -520,6 +520,12 @@ function showModal(message, isClear = false) {
     const btnArea = document.getElementById('modal-buttons');
     const rankingArea = document.getElementById('ranking-area');
 
+    if (isPaused) return; // 二重実行防止
+
+    isPaused = true;
+    pausedTime = Date.now(); 
+
+
     // CSSの display:none を打ち消すために flex を指定
     modal.style.display = 'flex'; 
 //    msgArea.innerText = message;
@@ -550,7 +556,12 @@ function showModal(message, isClear = false) {
 
 function closeModal() {
 console.log("closeModalが呼ばれました");
-    if (!isPaused) return;
+    // if (!isPaused) return;
+    if (!isPaused) {
+        console.warn("一時停止状態ではないため、処理を中断しました。isPausedの値:", isPaused);
+        // 実はここで return せずに進めてしまったほうが、
+        // 万が一の時でも「モーダルが閉じない」事態は防げます。
+    }
     const resumeTime = Date.now();
     const duration = resumeTime - pausedTime;   //中断時間の算出
 console.log("② 再開までの時間経過(ms):", duration);
@@ -561,21 +572,42 @@ console.log("④ ずらす前の startTime:", startTime);
 console.log("⑤ ずらした後の startTime:", startTime);
     isPaused = false;
     pausedTime = 0; // リセットしておく
-    //　モーダルを閉じる
-    document.getElementById('custom-modal').style.display = 'none';
-    // document.getElementById('helpmodal').style.display = 'none';
-    const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
-    
-    // ゲーム中ならタイマーを再開
-    if (!setupVisible) {
-    
-console.log("③ 中断していたミリ秒 (duration):", duration);
 
-        totalPausedDuration += duration;
-        
-        // 5. タイマーの画面更新を再開
-        timerInterval = setInterval(updateTimer, 1000);
+    // //　モーダルを閉じる
+    // document.getElementById('custom-modal').style.display = 'none';
+    // // document.getElementById('helpmodal').style.display = 'none';
+
+// --- モーダルを閉じる（安全な書き方） ---
+    const modal = document.getElementById('custom-modal'); // ここ、ID合ってますか？
+    if (modal) {
+        modal.style.display = 'none';
+        console.log("モーダルを非表示にしました");
+    } else {
+        console.error("エラー: 'custom-modal' というIDの要素が見つかりません！");
     }
+
+//     const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
+//     // ゲーム中ならタイマーを再開
+//     if (!setupVisible) {
+// console.log("③ 中断していたミリ秒 (duration):", duration);
+//         totalPausedDuration += duration;
+//         // 5. タイマーの画面更新を再開
+//         timerInterval = setInterval(updateTimer, 1000);
+//     }
+
+// --- セットアップ画面の判定 ---
+    const setupScreen = document.getElementById('setup-screen');
+    if (setupScreen) {
+        const setupVisible = setupScreen.style.display !== 'none';
+        if (!setupVisible) {
+            console.log("③ タイマーを再開します。中断時間:", duration);
+            totalPausedDuration += duration;
+            // 二重タイマー防止のため、一度クリアしてからセット
+            clearInterval(timerInterval); 
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+    }
+
 }
 
 function restartGame() {

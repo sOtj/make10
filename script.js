@@ -127,6 +127,11 @@ let pausedTime = 0;
 let isPaused = false;
 let totalPausedDuration = 0; // 中断した時間の合計
 
+let startTime; // 開始した時刻
+let elapsedTime = 0; // それまでに経過した合計時間（ミリ秒）
+let timerInterval;
+
+
 // startTime = 0, 
 timerInterval = null;
 
@@ -780,9 +785,6 @@ document.getElementById('help-btn').onclick = () => {
 };
 
 
-let startTime; // 開始した時刻
-let elapsedTime = 0; // それまでに経過した合計時間（ミリ秒）
-let timerInterval;
 
 // ヘルプを開くとき
 function pauseTimer() {

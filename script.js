@@ -774,9 +774,9 @@ async function handleCheckNames() {
 
 // 2. ? ボタンをクリックした時にその関数を呼び出すように設定
 // document.getElementById('help-btn').onclick = showHelp;
-document.getElementById('help-btn').onclick = () => {
-    showModal(helpMsgReg);
-};
+// document.getElementById('help-btn').onclick = () => {
+//     showModal(helpMsgReg);
+// };
 
 
 

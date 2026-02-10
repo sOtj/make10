@@ -121,9 +121,10 @@ const helpMessage = `
     </div>
 `;
 
-let elapsedSeconds = 0; // 実際にプレイした秒数
+// let elapsedSeconds = 0; // 実際にプレイした秒数
 
 let pausedTime = 0;
+let isPaused = false;
 let totalPausedDuration = 0; // 中断した時間の合計
 
 // ***** Initializing game variables
@@ -548,29 +549,32 @@ function showModal(message, isClear = false) {
 }
 
 function closeModal() {
-    document.getElementById('custom-modal').style.display = 'none';
-    const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
-    
-    // ゲーム中ならタイマーを再開
-    if (!setupVisible) {
-        // 3. 止まっていた時間を計算して加算
-        const now = Date.now()
-        const duration = now - pausedTime;
+    if (!isPaused) return;
+    const resumeTime = Date.now();
+    const duration = resumeTime - pausedTime;   //中断時間の算出
+console.log("② 再開までの時間経過(ms):", duration);
 
-console.log("② 現在時刻:", now);
-console.log("③ 中断していたミリ秒 (duration):", duration);
-
-
-        totalPausedDuration += duration;
-        
-        // 4. 開始時刻を「止まっていた分」だけ後ろにずらす
+        //  開始時刻を「止まっていた分」だけ後ろにずらす
 console.log("④ ずらす前の startTime:", startTime);
-        startTime += duration;
+    startTime += duration;
 console.log("⑤ ずらした後の startTime:", startTime);
+    isPaused = false;
+    pausedTime = 0; // リセットしておく
+    //　モーダルを閉じる
+//　    document.getElementById('custom-modal').style.display = 'none';
+    document.getElementById('helpmodal').style.display = 'none';
+//     const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
+    
+//     // ゲーム中ならタイマーを再開
+//     if (!setupVisible) {
+    
+// console.log("③ 中断していたミリ秒 (duration):", duration);
+
+//         totalPausedDuration += duration;
         
-        // 5. タイマーの画面更新を再開
-        timerInterval = setInterval(updateTimer, 1000);
-    }
+//         // 5. タイマーの画面更新を再開
+//         timerInterval = setInterval(updateTimer, 1000);
+//     }
 }
 
 function restartGame() {
@@ -800,48 +804,21 @@ async function handleCheckNames() {
 
 // 1. ヘルプを表示する専用の関数を定義
 function showHelp() {
-//     const helpMessage = `【How to Play】
-// 1. Select your School and Grade.
-// 2. Find your name (Check Names).
-// 3. Enter your 4-digit password.
-// 4. Select a pair that makes 10!
-//    (Example: 3 and 7, 5 and 5)
-   
-// Good luck! 🍀`;
 
-// const helpMessage = `
-//     <div style="text-align: center; margin-bottom: 15px;">
-//         <h2 style="margin: 0; color: #333;">How To Play</h2>
-//     </div>
-//     <div style="text-align: left; font-size: 15px; line-height: 1.4;">
-//         <p><b>1. School & Grade</b><br>Select from the lists.</p>
-        
-//         <p><b>2. Your Name</b><br>Type your name! You can use any name if it's unique in your class. ✨</p>
-        
-//         <p><b>3. Password</b><br>Enter your 4-digit number.</p>
-        
-//         <p><b>4. Make 10!</b><br>Find two numbers that make 10.</p>
-        
-//         <div style="text-align: center; background: #f0f0f0; padding: 10px; border-radius: 10px; margin-top: 10px;">
-//             <div style="margin-bottom: 15px;">
-//                 <img src="mk10m12.png" style="width: 90%; border-radius: 5px;">
-//                 <br><small>Pick one (Yellow! 🟡)</small>
-//             </div>
-//             <div>
-//                 <img src="mk10m22.png" style="width: 90%; border-radius: 5px;">
-//                 <br><small>Match for 10 (Blue! 🔵)</small>
-//             </div>
-//         </div>
-        
-//         <p style="text-align: center; margin-top: 15px; font-size: 18px;"><b>Good luck! 🍀</b></p>
-//     </div>
-// `;
-        // 1. タイマー（画面更新）を止める
-        clearInterval(timerInterval);
-        // 2. 止めた瞬間の時刻を記録
-        pausedTime = Date.now();
-console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
-        showModal(helpMessage);
+    if (isPaused) return; // 二重実行防止
+
+    isPaused = true;
+    pausedTime = Date.now(); 
+  
+console.log("① 中断した時刻:", pausedTime);
+//         // 1. タイマー（画面更新）を止める
+//         clearInterval(timerInterval);
+//         // 2. 止めた瞬間の時刻を記録
+//         pausedTime = Date.now();
+// console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
+//         showModal(helpMessage);
+
+    document.getElementById('helpModal').style.display = 'block';
 }
 
 

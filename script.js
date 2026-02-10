@@ -131,7 +131,8 @@ let totalPausedDuration = 0; // 中断した時間の合計
 timerInterval = null,
 
 // ***** Initializing game variables
-let firstCell = null, errors = 0;
+let firstCell = null; 
+errors = 0;
 const board = document.getElementById('game-board');
 
 function updateSchoolList() {   // ***** Filtering the school list by circuit

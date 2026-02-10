@@ -128,7 +128,7 @@ let isPaused = false;
 let totalPausedDuration = 0; // 中断した時間の合計
 
 // startTime = 0, 
-timerInterval = null,
+timerInterval = null;
 
 // ***** Initializing game variables
 let firstCell = null; 

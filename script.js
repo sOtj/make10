@@ -378,6 +378,7 @@ function checkClear() {     // ***** done / not yet
     const solved = document.querySelectorAll('.cell.hidden, .cell.latest').length;
     
     if (solved === 72) {
+        isClear = true;
         clearInterval(timerInterval);
         const finalTime = document.getElementById('timer').innerText;
         const finalErrors = errors;
@@ -536,6 +537,8 @@ console.warn("ShowModal - isPausedの値:", isPaused);
     // modal.style.display = 'flex';   // centering
     // msgArea.innerText = message;
     // rankingArea.style.display = 'none';     // hide ranking at the beginning
+
+    console.warn("chkTiming - isClearの値:", isClear);
     
     if (isClear) {        // cleared all the cards
         btnArea.innerHTML = `

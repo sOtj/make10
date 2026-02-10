@@ -521,7 +521,7 @@ function showModal(message, isClear = false) {
     const rankingArea = document.getElementById('ranking-area');
 
     if (isPaused) return; // 二重実行防止
-
+console.warn("at ShowModal - isPausedの値:", isPaused);
     isPaused = true;
     pausedTime = Date.now(); 
 
@@ -558,7 +558,7 @@ function closeModal() {
 console.log("closeModalが呼ばれました");
     // if (!isPaused) return;
     if (!isPaused) {
-        console.warn("一時停止状態ではないため、処理を中断しました。isPausedの値:", isPaused);
+console.warn("一時停止状態ではないため、処理を中断しました。isPausedの値:", isPaused);
         // 実はここで return せずに進めてしまったほうが、
         // 万が一の時でも「モーダルが閉じない」事態は防げます。
     }

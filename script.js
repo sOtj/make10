@@ -595,92 +595,6 @@ function backToSetup() {
     document.getElementById('setup-screen').style.display = 'block';
 }
 
-// async function fetchRanking(type) {
-//     const rankingArea = document.getElementById('ranking-area');
-//     const rankingTitle = document.getElementById('ranking-title');
-//     const rankingList = document.getElementById('ranking-list');
- 
-//     rankingArea.classList.add('ranking-visible'); // 直接 style を触らずクラスで制御
-
-//     rankingArea.style.display = 'block';
-//     rankingTitle.innerText = "Loading...";
-//     rankingList.innerHTML = "";
-
-//     const schoolName = document.getElementById('school-list').value;
-//     const schoolData = schoolMaster.find(s => s.name === schoolName);
-
-//     const params = new URLSearchParams({
-//         action: "getRanking",
-//         type: type,
-//         school: schoolName,
-//         circuit: schoolData.circuit,
-//         region: "Otjozondjupa" // 固定
-//     });
-
-//     try {
-//         // ランキング取得時は mode: 'no-cors' を絶対に付けない（デフォルトのままで良い）
-//         const response = await fetch(`${GAS_URL}?${params.toString()}`);
-// // console.log('raw data:', rawData); 
-// // console.log('type/len:', typeof rawData, rawData?.length);
-// // console.log('first item keys:', rawData && Object.keys(rawData[0] || {}));
-// // const sample5 = (rawData || []).slice(0, 5);
-// // console.table(sample5);
-
-
-//         if (!response.ok) throw new Error('Network response was not ok');
-//         const data = await response.json();
-
-//         // ボタン名を Region に合わせて表示
-//         const titles = { school: "School", circuit: "Circuit", region: "Region" };
-//         rankingTitle.innerText = `${titles[type]} TOP 5`;
-
-//         if (!data || data.length === 0) {
-//             rankingList.innerHTML = "<li>No data</li>";
-//         } else {
-// //  -----------  New Top5 format
-//             data.forEach(item => {
-//                 const li = document.createElement('li');
-//                 li.innerText = `${item.time} | ${item.name} - ${item.school} ${item.grade}`;
-//                 // li.style.borderBottom = "1px solid #eee";
-//                 // li.style.padding = "4px 0";
-//                 // li.innerHTML = `<strong>${index + 1}.</strong> ${item.name} (${item.school}) <br> 
-//                 //                 <span style="color:#d32f2f;">${item.time}</span> [Err:${item.errors}]`;
-                
-//             // 1. 現在入力されている値を画面から直接取得する
-//                 const currentName = document.getElementById('user-name').value;
-//                 const currentSchool = document.getElementById('school-list').value;
-//                 const currentGrade = document.getElementById('grade-list').value;
-
-//                 const rankingList = document.getElementById('ranking-list');
-//                 rankingList.innerHTML = "";
-
-//                 filtered.forEach((item, index) => {
-//                     const li = document.createElement('li');
-//             // 2. 自分のデータかどうか判定（item内のキー名はGAS側と合わせる）
-//                 // GAS側ですべて小文字で返すように設定している場合は item.name / item.school / item.grade
-//                 const isMe = (item.name === currentName && 
-//                             item.school === currentSchool && 
-//                             String(item.grade) === String(currentGrade));
-
-//                 li.innerText = `${index + 1}. ${item.time} | ${item.name} - ${item.school} gr${item.grade}`;
-
-//                 // 3. 自分だったらスタイルを変更
-//                 if (isMe) {
-//                     li.style.color = "red";
-//                     li.style.fontWeight = "bold";
-//                 }
-
-//                 rankingList.appendChild(li);
-//             });
-//         }
-//     } catch (e) {
-//         console.error(e);
-//         rankingTitle.innerText = "Error loading ranking";
-//     }
-//     }
-// }
-
-
 async function fetchRanking(type) {
     const rankingArea = document.getElementById('ranking-area');
     const rankingTitle = document.getElementById('ranking-title');
@@ -821,11 +735,6 @@ console.log("① 中断した時刻:", pausedTime);
     document.getElementById('custom-Modal').style.display = 'block';
 }
 
-
-
-
-
-
-
 // 2. ボタンをクリックした時にその関数を呼び出すように設定
-document.getElementById('help-btn').onclick = showHelp;
+// document.getElementById('help-btn').onclick = showHelp;
+document.getElementById('help-btn').onclick = showModal(helpMessage);

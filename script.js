@@ -563,18 +563,18 @@ console.log("⑤ ずらした後の startTime:", startTime);
     //　モーダルを閉じる
 //　    document.getElementById('custom-modal').style.display = 'none';
     document.getElementById('helpmodal').style.display = 'none';
-//     const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
+    const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
     
-//     // ゲーム中ならタイマーを再開
-//     if (!setupVisible) {
+    // ゲーム中ならタイマーを再開
+    if (!setupVisible) {
     
-// console.log("③ 中断していたミリ秒 (duration):", duration);
+console.log("③ 中断していたミリ秒 (duration):", duration);
 
-//         totalPausedDuration += duration;
+        totalPausedDuration += duration;
         
-//         // 5. タイマーの画面更新を再開
-//         timerInterval = setInterval(updateTimer, 1000);
-//     }
+        // 5. タイマーの画面更新を再開
+        timerInterval = setInterval(updateTimer, 1000);
+    }
 }
 
 function restartGame() {

@@ -561,8 +561,8 @@ console.log("⑤ ずらした後の startTime:", startTime);
     isPaused = false;
     pausedTime = 0; // リセットしておく
     //　モーダルを閉じる
-//　    document.getElementById('custom-modal').style.display = 'none';
-    document.getElementById('helpmodal').style.display = 'none';
+　    document.getElementById('custom-modal').style.display = 'none';
+    // document.getElementById('helpmodal').style.display = 'none';
     const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
     
     // ゲーム中ならタイマーを再開
@@ -818,7 +818,7 @@ console.log("① 中断した時刻:", pausedTime);
 // console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
 //         showModal(helpMessage);
 
-    document.getElementById('helpModal').style.display = 'block';
+    document.getElementById('custom-Modal').style.display = 'block';
 }
 
 

@@ -228,7 +228,7 @@ button:disabled {background-color: #ebebeb;cursor: not-allowed;opacity: 0.7;}
 
 /* CSS：見た目をすべて一括管理 */
 /* #help-btn {     /* サイズと形状 */
-#helpBtnReg {     /* サイズと形状 */
+#helpBtnReg, .helpBtnGame  {     /* サイズと形状 */
     width: 32px; height: 32px; border-radius: 50%;
     /* 文字の調整 */
     font-size: 18px; font-weight: bold; display: flex; align-items: center; justify-content: center;
@@ -271,7 +271,7 @@ button:disabled {background-color: #ebebeb;cursor: not-allowed;opacity: 0.7;}
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px; /* 数字とボタンの間のスキマ */
+    gap: 9px; /* 数字とボタンの間のスキマ */
 }
 
 /* ヘルプボタンのデザイン */

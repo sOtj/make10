@@ -561,7 +561,7 @@ console.log("⑤ ずらした後の startTime:", startTime);
     isPaused = false;
     pausedTime = 0; // リセットしておく
     //　モーダルを閉じる
-　    document.getElementById('custom-modal').style.display = 'none';
+    document.getElementById('custom-modal').style.display = 'none';
     // document.getElementById('helpmodal').style.display = 'none';
     const setupVisible = document.getElementById('setup-screen').style.display !== 'none';
     

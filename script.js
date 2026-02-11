@@ -89,8 +89,8 @@ const helpMsgReg = `
         </div>
 
         <div class="image-container" style="position: relative; width: 100%; height: 120px; margin-top: 10px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
-            <img src="hlpRg1.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
-            <img src="hlpRg2.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+        <img src="hlpRg1.png" class="fade-img" style="position: absolute; width: 100%; height: 100%; object-fit: contain;">
+        <img src="hlpRg2.png" class="fade-img" style="position: absolute; width: 100%; height: 100%; object-fit: contain;">
         </div>
         <p style="font-size: 12px; color: #666; margin-top: 5px;">Click the button to check which names are already taken</p>
     </div>

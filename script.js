@@ -83,16 +83,16 @@ const helpMsgReg = `
         <h3 style="margin-bottom: 10px;">How To Register</h3>
         
         <div style="text-align: left; display: inline-block;">
-            <p>1. <b>Register:</b> Choose your school and grade ✨</p>
-            <p>2. <b>Pass:</b> You can name whatever you want <br> if it is unique in your school / grade </p>
-            <p>3. <b>Game:</b> Enter 4-digits. Make 10! (3+7, 5+5...)</p>
+            <p>1. Choose your <b>school</b> and <b>grade</b> ✨</p>
+            <p>2. You can name whatever you want <br> if it is <b>unique in your school / grade</b> </p>
+            <p>3. Enter 4-digits password. Don't forget it!</p>
         </div>
 
         <div class="image-container" style="position: relative; width: 100%; height: 120px; margin-top: 10px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
-            <img src="mk10m12.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
-            <img src="mk10m22.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+            <img src="hlpRg1.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+            <img src="hlpRg2.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
         </div>
-        <p style="font-size: 12px; color: #666; margin-top: 5px;">Don't forget your password!!</p>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;">Click the button to check which names are already taken</p>
     </div>
 `;
 const helpMsgGame = `
@@ -100,16 +100,16 @@ const helpMsgGame = `
         <h3 style="margin-bottom: 10px;">How To Play</h3>
         
         <div style="text-align: left; display: inline-block;">
-            <p>1. <b>Register:</b> Choose any available number ✨</p>
-            <p>2. <b>Pass:</b> You can name whatever you want <br> if it is unique in your school / grade </p>
-            <p>3. <b>Game:</b> Enter 4-digits. Make 10! (3+7, 5+5...)</p>
+            <p>1. Choose any available number ✨</p>
+            <p>2. Pick the numbers that add up to 10 </p>
+            <p>3. (1+9, 2+8, 3+7, 4+6, 5+5...)</p>
         </div>
 
         <div class="image-container" style="position: relative; width: 100%; height: 120px; margin-top: 10px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
-            <img src="mk10m12.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
-            <img src="mk10m22.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+            <img src="hlpGm1.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+            <img src="hlpGm2.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
         </div>
-        <p style="font-size: 12px; color: #666; margin-top: 5px;">You can see this by clicking [?] button at the top-right</p>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;">Black numbers are available.<br>Click [?] button at the right top to show this again</p>
     </div>
 `;
 

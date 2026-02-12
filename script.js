@@ -517,7 +517,7 @@ async function saveResult(time, err) {
             showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
             
             // 10秒待ってから saveResult をもう一度実行
-            startRetryTimer(() => saveResult()); 
+            startRetryTimer(() => saveResult(time, err)); 
 
         } else {
             // --- 【諦めモード】 3回全部失敗したとき ---
@@ -541,8 +541,8 @@ async function saveResult(time, err) {
         }
     } finally {
         // ...既存の処理...
-        btn.disabled = false;
-        btn.innerText = originalText;
+        // btn.disabled = false;    btnは未定義
+        // btn.innerText = originalText;
     }
 }
 

@@ -116,14 +116,12 @@ const helpMsgGame = `
 let startTime;               // ゲームを始めた瞬間の時刻
 let pausedStartTime;         // 一時停止（モーダルを開いた）瞬間の時刻
 let totalPausedDuration = 0;   // 合計で何ミリ秒止まっていたか
-let timerInterval;           // setIntervalの入れ物// let elapsedSeconds = 0; // 実際にプレイした秒数
-let isPaused = false;
+let timerInterval = null;           // setIntervalの入れ物// let elapsedSeconds = 0; // 実際にプレイした秒数
+let isPaused = false;       //  一時停止中
 
 // let pausedTime = 0;         //？？必要？？
 // let elapsedTime = 0; // ？？それまでに経過した合計時間（ミリ秒）必要？？
 
-// startTime = 0, 
-timerInterval = null;
 
 // ***** Initializing game variables
 let firstCell = null; 
@@ -314,32 +312,6 @@ function shuffle(array) {
     });
 }
 */    
-function updateTimer() {
-    // モーダルが表示されている間はカウントアップしない
-    // if (document.getElementById('custom-modal').style.display === 'flex') {
-    //     // モーダルが開いている間は「一時停止時間」が蓄積されるように工夫が必要ですが、
-    //     // 簡易的には「表示を更新しない」だけでOKです。
-    //     return; 
-    // }
-    // ★重要：一時停止フラグが true の時は、これ以降の処理をしない
-    if (isPaused) return;
-
-    // elapsedSeconds++; // 1秒増やす　!!!誤差が出るので使用不可!!!
-    // 現在時刻と開始時刻の差分（ミリ秒）を計算
-    const now = Date.now();
-    const diffInMs = now - startTime - totalPausedDuration; // 
-    const totalSeconds = now - Math.floor(diffInMs / 1000); // 
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-
-    // // 00:00 の形式に整えて表示
-    const displayTime = 
-        String(minutes).padStart(2, '0') + ":" + 
-        String(seconds).padStart(2, '0');
-    
-    document.getElementById('timer').innerText = displayTime;
-};
-
 
 function onCellClick(cell) {
     if (cell.classList.contains('hidden') || cell.classList.contains('latest')) return;
@@ -592,33 +564,41 @@ function closeModal() {
 //         }
 //     }
 // ----------------------------------
+// 【重要】まず最初に「停止していた時間」を計算して合計に足す！
+    // これを isPaused = false にする前にやらないと、計算がスキップされてしまいます。
+    if (isPaused) {
+        const duration = Date.now() - pausedStartTime;
+        totalPausedDuration += duration;
+        isPaused = false; // 計算が終わってからフラグを下ろす
+        resumeTimer(); // ここで停止時間の加算とsetIntervalが行われる
+    }
 // 1. モーダルを消す（UIの役割）
     const modal = document.getElementById('custom-modal');
     if (modal) modal.style.display = 'none';
 
-    // 2. 停止状態なら、計算を再開させる（ロジックの役割）
-    if (isPaused) {
-        isPaused = false;
-        resumeTimer(); // ここで停止時間の加算とsetIntervalが行われる
-    }
+// 2. 停止状態なら、計算を再開させる（ロジックの役割）
+    // if (isPaused) {
+    //     isPaused = false;
+    //     resumeTimer(); // ここで停止時間の加算とsetIntervalが行われる
+    // }
 // ----------------------------------
     if (!isPaused) return;
 
-    // ★今回の停止時間を計算して、合計に足す
-    const duration = Date.now() - pausedStartTime;
-    totalPausedDuration += duration;
+    // // ★今回の停止時間を計算して、合計に足す
+    // const duration = Date.now() - pausedStartTime;
+    // totalPausedDuration += duration;
     
-    isPaused = false;
+    // isPaused = false;
 
-    // モーダルを閉じる
-    document.getElementById('custom-modal').style.display = 'none';
+    // // モーダルを閉じる
+    // document.getElementById('custom-modal').style.display = 'none';
 
-    // セットアップ画面でなければタイマーを再始動
-    const setupScreen = document.getElementById('setup-screen');
-    if (setupScreen && setupScreen.style.display === 'none') {
-        clearInterval(timerInterval); 
-        timerInterval = setInterval(updateTimer, 1000);
-    }
+    // // セットアップ画面でなければタイマーを再始動
+    // const setupScreen = document.getElementById('setup-screen');
+    // if (setupScreen && setupScreen.style.display === 'none') {
+    //     clearInterval(timerInterval); 
+    //     timerInterval = setInterval(updateTimer, 1000);
+    // }
 }
 
 function restartGame() {
@@ -636,6 +616,7 @@ function restartGame() {
 function backToSetup() {
     closeModal();
     document.getElementById('game-screen').style.display = 'none';
+    document.getElementById('board').style.display = 'none';
     document.getElementById('setup-screen').style.display = 'block';
 }
 
@@ -818,19 +799,44 @@ function resumeTimer() {
     timerInterval = setInterval(updateTimer, 1000);
 }
 
-// 4. 計算と表示（1秒ごとに勝手に動く）
-function updateTimer() {
-    const now = Date.now();
-    // 【公式】経過時間 = 今 - 開始時 - 止まってた合計
-    const diffInMs = now - startTime - totalPausedDuration;
+// // 4. 計算と表示（1秒ごとに勝手に動く）
+// function updateTimer() {
+//     const now = Date.now();
+//     // 【公式】経過時間 = 今 - 開始時 - 止まってた合計
+//     const diffInMs = now - startTime - totalPausedDuration;
     
-    const totalSeconds = Math.floor(diffInMs / 1000);
-    const m = Math.floor(totalSeconds / 60);
-    const s = totalSeconds % 60;
+//     const totalSeconds = Math.floor(diffInMs / 1000);
+//     const m = Math.floor(totalSeconds / 60);
+//     const s = totalSeconds % 60;
 
-    document.getElementById('timer').innerText = 
-        String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
-}
+//     document.getElementById('timer').innerText = 
+//         String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
+// }
+
+
+function updateTimer() {
+    // ★重要：一時停止フラグが true の時は、これ以降の処理をしない
+    if (!startTime) return;
+    if (isPaused) return;
+    // 現在時刻と開始時刻の差分（ミリ秒）を計算
+    const now = Date.now();
+    const diffInMs = now - startTime - totalPausedDuration; // 
+    const totalSeconds = now - Math.floor(diffInMs / 1000); // 
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    // // 00:00 の形式に整えて表示
+    const displayTime = 
+        String(minutes).padStart(2, '0') + ":" + 
+        String(seconds).padStart(2, '0');
+    
+    document.getElementById('timer').innerText = displayTime;
+};
+
+
+
+
+
 
 // 5. 変換ツール（計算には直接関与せず、データの整形用）
 function timeToSec(t) {

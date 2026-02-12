@@ -119,6 +119,7 @@ let totalPausedDuration = 0;   // 合計で何ミリ秒止まっていたか
 let timerInterval = null;           // setIntervalの入れ物// let elapsedSeconds = 0; // 実際にプレイした秒数
 let isPaused = false;       //  一時停止中
 let isClear = false;
+let loginRetryCount = 0;    // ログインの試行回数を記録する
 
 // let pausedTime = 0;         //？？必要？？
 // let elapsedTime = 0; // ？？それまでに経過した合計時間（ミリ秒）必要？？
@@ -198,7 +199,6 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
     const originalText = btn.innerText;
     btn.innerText = "Connecting...";
 // ログイン（ベストタイム取得）
-
     try{
         const response = await fetch(GAS_URL, {
             method: "POST",
@@ -210,6 +210,8 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
         if (!response.ok) throw new Error("Network issues");
 
         const result = await response.json();
+        // ここでリセット！（通信が成功し、中身が読み込めたため）12 Feb
+        loginRetryCount = 0;    // 12 Feb
         if (result.status === "error") {
 //            return alert(result.data); // パスワード間違いなど
             showModal(result.data);
@@ -239,11 +241,41 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
         startGameLogic(); // 実際のゲーム開始処理（セル生成など）を別関数に切り出すと綺麗です
 
     } catch (e) {
-        console.warn("GAS connection failed, but starting game anyway:", e);
-        // 通信に失敗しても、過去の記録が見れないだけでゲーム自体は始められるようにします
-        document.getElementById('best-time').innerText = "OFFLINE";
-        document.getElementById('setup-screen').style.display = 'none';
-        startGameLogic();  
+        // console.warn("GAS connection failed, but starting game anyway:", e);
+        // // 通信に失敗しても、過去の記録が見れないだけでゲーム自体は始められるようにします
+        // document.getElementById('best-time').innerText = "OFFLINE";
+        // document.getElementById('setup-screen').style.display = 'none';
+        // startGameLogic();  
+        console.warn(`GAS connection failed (Attempt ${loginRetryCount + 1}):`, e);
+        loginRetryCount++; // 失敗したので回数を1増やす
+
+        if (loginRetryCount < 3) {
+            // --- 【再試行モード】 1回目、2回目の失敗 ---
+            showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
+            
+            // 10秒待ってから initGame をもう一度実行
+            startRetryTimer(() => initGame()); 
+
+        } else {
+            // --- 【諦めモード】 3回全部失敗したとき ---
+            loginRetryCount = 0; // 次回のためにリセット
+            
+            // 1年生にも伝わるよう、OFFLINE表示とメッセージを出す
+            document.getElementById('best-time').innerText = "OFFLINE";
+            
+            const warningMsg = `
+                <div style="color: #d9534f; font-weight: bold;">OFFLINE MODE</div>
+                <p>Sorry, we couldn't connect to the server.</p>
+                <p style="font-size: 13px;">This session will NOT be recorded.<br>You can play, but cannot join the ranking.</p>
+                <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
+            `;
+            
+            // モーダルを表示（OKを押すとゲームが始まるようにする）
+            showModal(warningMsg);
+            
+            // ※ここでは自動で startGameLogic() を呼ばず、
+            // 子供が上のOKボタンを押した時に始まるようにしています。
+        }
     } finally {
         // --- 【追加】最後にボタンの状態を戻す（念のため） ---
         btn.disabled = false;
@@ -469,10 +501,15 @@ async function saveResult(time, err) {
 
     try {
         // mode: 'no-cors' で送信
-        await fetch(fullURL, { mode: 'no-cors' });
-        console.log("Fetch call completed (no-cors). Check Spreadsheet now.");
+        // await fetch(fullURL, { mode: 'no-cors' });
+        const response = await fetch(fullURL, { mode: 'no-cors' }); //12Feb
+        // console.log("Fetch call completed (no-cors). Check Spreadsheet now."); del 12Feb
+        // 成功したら隠す
+        document.getElementById('retry-container').style.display = 'none';  //12Feb
     } catch (e) {
-        console.error("Fetch failed:", e);
+        // console.error("Save failed, retrying...", e);
+        // startRetryTimer(time, err); // (12Feb) 
+        startRetryTimer(() => saveResult(time, err));    // (12Feb)
     }
 }
 
@@ -864,4 +901,28 @@ function timeToSec(t) {
     // 通常の "01:23" 形式の場合
     const p = t.split(':');
     return parseInt(p[0]) * 60 + parseInt(p[1]);
+}
+
+// 引数 callback に、やり直したい「関数そのもの」を渡します
+function startRetryTimer(callback) {
+    const container = document.getElementById('retry-container');
+    const timerText = document.getElementById('retry-timer');
+    let timeLeft = 10;
+
+    container.style.display = 'block'; // くるくる開始
+
+    const interval = setInterval(() => {
+        timeLeft--;
+        timerText.innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            container.style.display = 'none'; // くるくる終了
+            
+            // ここで、渡された関数を実行する！
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
+    }, 1000);
 }

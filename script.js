@@ -510,6 +510,42 @@ async function saveResult(time, err) {
         // console.error("Save failed, retrying...", e);
         // startRetryTimer(time, err); // (12Feb) 
         startRetryTimer(() => saveResult(time, err));    // (12Feb)
+        loginRetryCount++; // 失敗したので回数を1増やす(12Feb)
+
+        if (loginRetryCount < 3) {
+            // --- 【再試行モード】 1回目、2回目の失敗 ---
+            showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
+            
+            // 10秒待ってから saveResult をもう一度実行
+            startRetryTimer(() => saveResult()); 
+
+        } else {
+            // --- 【諦めモード】 3回全部失敗したとき ---
+            loginRetryCount = 0; // 次回のためにリセット
+            
+            // 1年生にも伝わるよう、OFFLINE表示とメッセージを出す
+            // document.getElementById('best-time').innerText = "OFFLINE";
+            
+            const warningMsg = `
+                <div style="color: #d9534f; font-weight: bold;">OFFLINE MODE</div>
+                <p>Sorry, we couldn't connect to the server.</p>
+                <p style="font-size: 13px;">This session will NOT be recorded.<br>You can play, but cannot join the ranking.</p>
+                <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
+            `;
+            
+            // モーダルを表示（OKを押すとゲームが始まるようにする）
+            showModal(warningMsg);
+            
+            // ※ここでは自動で startGameLogic() を呼ばず、
+            // 子供が上のOKボタンを押した時に始まるようにしています。
+        }
+    } finally {
+        // ...既存の処理...
+        btn.disabled = false;
+        btn.innerText = originalText;
+
+
+
     }
 }
 

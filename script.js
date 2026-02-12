@@ -106,8 +106,8 @@ const helpMsgGame = `
         </div>
 
         <div class="image-container" style="position: relative; width: 100%; height: 120px; margin-top: 10px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
-            <img src="hlpGm1.png" class="fade-img" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
-            <img src="hlpGm2.png" class="fade-img img-2" style="position: absolute; left: 50%; transform: translateX(-50%); height: 100%; width: auto;">
+            <img src="hlpGm1.png" class="fade-img" style="position: absolute; width: 100%; height: 100%; object-fit: contain;">
+            <img src="hlpGm2.png" class="fade-img img-2" style="position: absolute; width: 100%; height: 100%; object-fit: contain;">
         </div>
         <p style="font-size: 12px; color: #666; margin-top: 5px;">Black numbers are available.<br>Click [?] button at the right top to show this again</p>
     </div>
@@ -118,6 +118,7 @@ let pausedStartTime;         // 一時停止（モーダルを開いた）瞬間
 let totalPausedDuration = 0;   // 合計で何ミリ秒止まっていたか
 let timerInterval = null;           // setIntervalの入れ物// let elapsedSeconds = 0; // 実際にプレイした秒数
 let isPaused = false;       //  一時停止中
+let isClear = false;
 
 // let pausedTime = 0;         //？？必要？？
 // let elapsedTime = 0; // ？？それまでに経過した合計時間（ミリ秒）必要？？
@@ -477,10 +478,13 @@ async function saveResult(time, err) {
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {
     if (isPaused) return; // 二重実行防止
+    // isPaused = true;
+    // pausedStartTime = Date.now(); // ★追加：止めた瞬間を記録
+    // clearInterval(timerInterval); // ★追加：表示の更新も止める
+
+    // 自作の pauseTimer を活用する
+    pauseTimer(); 
     isPaused = true;
-    pausedStartTime = Date.now(); // ★追加：止めた瞬間を記録
-    clearInterval(timerInterval); // ★追加：表示の更新も止める
-    // pauseTimer();
 
     const modal = document.getElementById('custom-modal');
     const msgArea = document.getElementById('modal-message');
@@ -566,12 +570,19 @@ function closeModal() {
 // ----------------------------------
 // 【重要】まず最初に「停止していた時間」を計算して合計に足す！
     // これを isPaused = false にする前にやらないと、計算がスキップされてしまいます。
-    if (isPaused) {
-        const duration = Date.now() - pausedStartTime;
-        totalPausedDuration += duration;
-        isPaused = false; // 計算が終わってからフラグを下ろす
-        resumeTimer(); // ここで停止時間の加算とsetIntervalが行われる
-    }
+    if (!isPaused) return;
+
+    // 自作の resumeTimer を活用する（ここで時間の加算とsetIntervalが行われる）
+    resumeTimer(); 
+    isPaused = false;
+    
+    // if (isPaused) {
+    //     const duration = Date.now() - pausedStartTime;
+    //     totalPausedDuration += duration;
+    //     isPaused = false; // 計算が終わってからフラグを下ろす
+    //     resumeTimer(); // ここで停止時間の加算とsetIntervalが行われる
+    // }
+
 // 1. モーダルを消す（UIの役割）
     const modal = document.getElementById('custom-modal');
     if (modal) modal.style.display = 'none';
@@ -582,7 +593,7 @@ function closeModal() {
     //     resumeTimer(); // ここで停止時間の加算とsetIntervalが行われる
     // }
 // ----------------------------------
-    if (!isPaused) return;
+
 
     // // ★今回の停止時間を計算して、合計に足す
     // const duration = Date.now() - pausedStartTime;
@@ -821,7 +832,7 @@ function updateTimer() {
     // 現在時刻と開始時刻の差分（ミリ秒）を計算
     const now = Date.now();
     const diffInMs = now - startTime - totalPausedDuration;
-console.log("now:", Math.floor(now/1000), "startTime:", Math.floor(startTime/1000), "totalPausedDuration:", Math.floor(totalPausedDuration/1000));
+// console.log("now:", Math.floor(now/1000), "startTime:", Math.floor(startTime/1000), "totalPausedDuration:", Math.floor(totalPausedDuration/1000));
     // const totalSeconds = now - Math.floor(diffInMs / 1000); // 
     const totalSeconds = Math.floor(diffInMs / 1000); // 
     const minutes = Math.floor(totalSeconds / 60);

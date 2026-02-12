@@ -261,7 +261,7 @@ function startGameLogic() {
     // document.getElementById('game-screen').style.display = 'block'; // ゲーム画面を出す
     setup.style.display = 'none'; // 設定画面を消す
     game.style.display = 'block'; // ゲーム画面を出す（ここが動かないと真っ白になります）
-    board.style.display = 'block'; // added 12 Feb ゲーム画面を出す（ここが動かないと真っ白になります）
+    // board.style.display = 'block'; // added 12 Feb ゲーム画面を出す（ここが動かないと真っ白になります）
 
     // 2. 変数の初期化
     errors = 0;

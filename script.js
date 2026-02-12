@@ -509,7 +509,7 @@ async function saveResult(time, err) {
     } catch (e) {
         // console.error("Save failed, retrying...", e);
         // startRetryTimer(time, err); // (12Feb) 
-        startRetryTimer(() => saveResult(time, err));    // (12Feb)
+        // startRetryTimer(() => saveResult(time, err));    // (12Feb)
         loginRetryCount++; // 失敗したので回数を1増やす(12Feb)
 
         if (loginRetryCount < 3) {
@@ -543,9 +543,6 @@ async function saveResult(time, err) {
         // ...既存の処理...
         btn.disabled = false;
         btn.innerText = originalText;
-
-
-
     }
 }
 
@@ -822,45 +819,6 @@ async function handleCheckNames() {
 
     document.getElementById('check-names-btn').onclick = handleCheckNames;
 
-// 1. ヘルプを表示する専用の関数を定義
-// function showHelp() {
-
-//     if (isPaused) return; // 二重実行防止
-
-//     isPaused = true;
-//     pausedTime = Date.now(); 
-  
-// console.log("① 中断した時刻:", pausedTime);
-// //         // 1. タイマー（画面更新）を止める
-// //         clearInterval(timerInterval);
-// //         // 2. 止めた瞬間の時刻を記録
-// //         pausedTime = Date.now();
-// // console.log("① 中断した時刻 (pausedTime):", pausedTime); // 確認用
-// //         showModal(helpMessage);
-
-//     document.getElementById('custom-Modal').style.display = 'block';
-// }
-
-// 2. ? ボタンをクリックした時にその関数を呼び出すように設定
-// document.getElementById('help-btn').onclick = showHelp;
-// document.getElementById('help-btn').onclick = () => {
-//     showModal(helpMsgReg);
-// };
-
-
-
-// // ヘルプを開くとき
-// function pauseTimer() {
-//   clearInterval(timerInterval);
-//   // 現在時刻 - 開始時刻 をして、これまでの経過時間を保存
-//   elapsedTime += Date.now() - startTime;
-// }
-
-// // ヘルプを閉じて再開するとき
-// function resumeTimer() {
-//   startTime = Date.now(); // 今の時刻を新しい開始時刻にする
-//   timerInterval = setInterval(updateTimer, 10);
-// }
 
 // 1. ゲーム開始時
 function startTimer() {
@@ -885,20 +843,6 @@ function resumeTimer() {
 }
 
 // // 4. 計算と表示（1秒ごとに勝手に動く）
-// function updateTimer() {
-//     const now = Date.now();
-//     // 【公式】経過時間 = 今 - 開始時 - 止まってた合計
-//     const diffInMs = now - startTime - totalPausedDuration;
-    
-//     const totalSeconds = Math.floor(diffInMs / 1000);
-//     const m = Math.floor(totalSeconds / 60);
-//     const s = totalSeconds % 60;
-
-//     document.getElementById('timer').innerText = 
-//         String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
-// }
-
-
 function updateTimer() {
     // ★重要：一時停止フラグが true の時は、これ以降の処理をしない
     if (!startTime) return;
@@ -919,10 +863,6 @@ function updateTimer() {
     
     document.getElementById('timer').innerText = displayTime;
 };
-
-
-
-
 
 
 // 5. 変換ツール（計算には直接関与せず、データの整形用）

@@ -820,8 +820,9 @@ function updateTimer() {
     if (isPaused) return;
     // 現在時刻と開始時刻の差分（ミリ秒）を計算
     const now = Date.now();
-    const diffInMs = now - startTime - totalPausedDuration; // 
-    const totalSeconds = now - Math.floor(diffInMs / 1000); // 
+    const diffInMs = now - startTime - totalPausedDuration;
+    // const totalSeconds = now - Math.floor(diffInMs / 1000); // 
+    const totalSeconds = Math.floor(diffInMs / 1000); // 
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 

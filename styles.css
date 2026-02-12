@@ -86,33 +86,6 @@ select, input {
     gap: 6px; /* 数字とボタンの間のスキマ */
 }
 
-/* ******ヘルプボタンのデザイン 
-.help-btn-small {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background-color: #555; /* 背景より少し明るいグレー 
-    border: 1px solid #777;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* 押し心地を出すための演出 
-.help-btn-small:active {
-    background-color: #888;
-    transform: scale(1.1);
-}
-/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-
-
-
 #board { display: grid; grid-template-columns: repeat(8, 1fr); /* 8列に並べる */
         gap: 4px; padding: 10px; width: 95vw; max-width: 450px; margin: 10px auto;} /* game-screenでなくboardをgridにする */
 

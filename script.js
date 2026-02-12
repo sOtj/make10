@@ -502,7 +502,8 @@ async function saveResult(time, err) {
     try {
         // mode: 'no-cors' で送信
         // await fetch(fullURL, { mode: 'no-cors' });
-        const response = await fetch(fullURL, { mode: 'no-cors' }); //12Feb
+        // const response = await fetch(fullURL, { mode: 'no-cors' }); //12Feb
+        const response = await fetch(fullURL, { method: 'GET', redirect: 'follow' }); //12Feb
         // console.log("Fetch call completed (no-cors). Check Spreadsheet now."); del 12Feb
         // 成功したら隠す
         document.getElementById('retry-container').style.display = 'none';  //12Feb

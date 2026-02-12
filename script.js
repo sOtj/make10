@@ -254,7 +254,7 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
 function startGameLogic() {
     const setup = document.getElementById('setup-screen');
     const game = document.getElementById('game-screen');
-    const board = document.getElementById('board');
+    //const board = document.getElementById('board'); // moved inside game-screen 12Feb
 
     // 1. 画面表示の切り替え
     // document.getElementById('setup-screen').style.display = 'none'; // 入力画面を隠す
@@ -628,7 +628,7 @@ function restartGame() {
 function backToSetup() {
     closeModal();
     document.getElementById('game-screen').style.display = 'none';
-    document.getElementById('board').style.display = 'none';
+    //document.getElementById('board').style.display = 'none'; // moved inside game-screen 12Feb
     document.getElementById('setup-screen').style.display = 'block';
 }
 

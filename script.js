@@ -515,7 +515,7 @@ async function saveResult(time, err) {
 
         if (loginRetryCount < 3) {
             // --- 【再試行モード】 1回目、2回目の失敗 ---
-            showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
+            // showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
             
             // 10秒待ってから saveResult をもう一度実行
             startRetryTimer(() => saveResult(time, err)); 

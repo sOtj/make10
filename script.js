@@ -253,7 +253,7 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
             // --- 【再試行モード】 1回目、2回目の失敗 ---
             const warningMsgTry = `
                 <p style="font-size: 13px;">Connection failed. <br>Retrying...</p>
-                <p>(Attempt ${loginRetryCount + 1}/3))</p>
+                <p>Attempt ${loginRetryCount + 1}/3</p>
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             // モーダルを表示（OKを押すとゲームが始まるようにする）
@@ -526,7 +526,7 @@ async function saveResult(time, err) {
             isPaused = false; 
             const warningMsgTry = `
                 <p style="font-size: 13px;">Connection failed. <br>Retrying in 10s...</p>
-                <p>(Attempt ${loginRetryCount + 1}/3))</p>                
+                <p>Attempt ${loginRetryCount + 1}/3</p>                
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             // モーダルを表示（OKを押すとゲームが始まるようにする）
@@ -850,7 +850,7 @@ async function handleCheckNames() {
             isPaused = false; 
             const warningMsgTry = `
                 <p style="font-size: 13px;">Connection failed. <br>Retrying in 10s... </p>
-                <p>(Attempt ${loginRetryCount + 1}/3))</p>
+                <p>Attempt ${loginRetryCount + 1}/3</p>
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             // showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);

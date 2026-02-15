@@ -251,11 +251,15 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
 
         if (loginRetryCount < 3) {
             // --- 【再試行モード】 1回目、2回目の失敗 ---
-            showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
-            
+            const warningMsgTry = `
+                <p style="font-size: 13px;">Connection failed. <br>Retrying...</p>
+                <p>(Attempt ${loginRetryCount + 1}/3))</p>
+                <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
+            `;
+            // モーダルを表示（OKを押すとゲームが始まるようにする）
+            showModal(warningMsgTry);
             // 10秒待ってから initGame をもう一度実行
             startRetryTimer(() => initGame()); 
-
         } else {
             // --- 【諦めモード】 3回全部失敗したとき ---
             loginRetryCount = 0; // 次回のためにリセット
@@ -521,11 +525,14 @@ async function saveResult(time, err) {
             // showModalの冒頭に if(isPaused) があるなら、一時的にfalseにする
             const p = isPaused;
             isPaused = false; 
-            showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
+            const warningMsgTry = `
+                <p style="font-size: 13px;">Connection failed. <br>Retrying in 10s...</p>
+                <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
+            `;
+            // モーダルを表示（OKを押すとゲームが始まるようにする）
+            showModal(warningMsgTry);
+            // showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
             isPaused = true; // 再びロック
-            
-            // showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
-            
             // 10秒待ってから saveResult をもう一度実行
             startRetryTimer(() => saveResult(time, err)); 
 
@@ -933,7 +940,7 @@ function timeToSec(t) {
     return parseInt(p[0]) * 60 + parseInt(p[1]);
 }
 
-// 引数 callback に、やり直したい「関数そのもの」を渡します
+// 『くるくる』引数 callback に、やり直したい「関数そのもの」を渡す
 function startRetryTimer(callback) {
     const container = document.getElementById('retry-container');
     const timerText = document.getElementById('retry-timer');

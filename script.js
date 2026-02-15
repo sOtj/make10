@@ -540,6 +540,7 @@ async function saveResult(time, err) {
                 <p>Sorry, we couldn't connect to the server.</p>
                 <p style="font-size: 13px;">This session will NOT be recorded.<br>You can play, but cannot join the ranking.</p>
                 <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
+                <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             
             // モーダルを表示（OKを押すとゲームが始まるようにする）

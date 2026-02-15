@@ -515,6 +515,14 @@ async function saveResult(time, err) {
 
         if (loginRetryCount < 3) {
             // --- 【再試行モード】 1回目、2回目の失敗 ---
+            // --- 【再試行モード】 ---
+            // isPausedをチェックせずに強制的にメッセージを書き換える
+            // showModalの冒頭に if(isPaused) があるなら、一時的にfalseにする
+            const p = isPaused;
+            isPaused = false; 
+            showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
+            isPaused = true; // 再びロック
+            
             // showModal(`Connection failed. <br>Retrying... (Attempt ${loginRetryCount + 1}/3)`);
             
             // 10秒待ってから saveResult をもう一度実行
@@ -549,7 +557,7 @@ async function saveResult(time, err) {
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {
-    if (isPaused) return; // 二重実行防止
+    // if (isPaused) return; // 二重実行防止 通信障害の際はmodalの上にmodal
     // isPaused = true;
     // pausedStartTime = Date.now(); // ★追加：止めた瞬間を記録
     // clearInterval(timerInterval); // ★追加：表示の更新も止める

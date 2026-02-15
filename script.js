@@ -513,6 +513,7 @@ async function saveResult(time, err) {
         // 成功したら隠す
         document.getElementById('retry-container').style.display = 'none';  //12Feb
     } catch (e) {
+        if (timerInterval) clearInterval(timerInterval);    // stop timer
         document.getElementById('modal-buttons').innerHTML = '';    //delete buttons
         isClear = false;
         loginRetryCount++; // 失敗したので回数を1増やす(12Feb)
@@ -593,7 +594,6 @@ function showModal(message, isClear = false) {
                 <button class = "ranking-btn" onclick="fetchRanking('circuit')">Circuit TOP5</button>
                 <button class = "ranking-btn" onclick="fetchRanking('region')">Region TOP5</button>
             </div>
-
             <button class="action-btn" onclick="restartGame()">Try Again</button>
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;

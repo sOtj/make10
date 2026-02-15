@@ -513,9 +513,8 @@ async function saveResult(time, err) {
         // 成功したら隠す
         document.getElementById('retry-container').style.display = 'none';  //12Feb
     } catch (e) {
-        // console.error("Save failed, retrying...", e);
-        // startRetryTimer(time, err); // (12Feb) 
-        // startRetryTimer(() => saveResult(time, err));    // (12Feb)
+        document.getElementById('modal-buttons').innerHTML = '';    //delete buttons
+        isClear = false;
         loginRetryCount++; // 失敗したので回数を1増やす(12Feb)
 
         if (loginRetryCount < 3) {
@@ -527,6 +526,7 @@ async function saveResult(time, err) {
             isPaused = false; 
             const warningMsgTry = `
                 <p style="font-size: 13px;">Connection failed. <br>Retrying in 10s...</p>
+                <p>(Attempt ${loginRetryCount + 1}/3))</p>                
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             // モーダルを表示（OKを押すとゲームが始まるようにする）
@@ -848,13 +848,13 @@ async function handleCheckNames() {
             // showModalの冒頭に if(isPaused) があるなら、一時的にfalseにする
             const p = isPaused;
             isPaused = false; 
-            const warningMsg10x3 = `
-                <p></p>
+            const warningMsgTry = `
                 <p style="font-size: 13px;">Connection failed. <br>Retrying in 10s... </p>
-                <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
+                <p>(Attempt ${loginRetryCount + 1}/3))</p>
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
-            showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
+            // showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
+            showModal(warningMsgTry);
             isPaused = true; // 再びロック
             // 10秒待ってから saveResult をもう一度実行
             startRetryTimer(() => handleCheckNames()); 

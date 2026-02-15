@@ -841,10 +841,16 @@ async function handleCheckNames() {
             // showModalの冒頭に if(isPaused) があるなら、一時的にfalseにする
             const p = isPaused;
             isPaused = false; 
+            const warningMsg10x3 = `
+                <p></p>
+                <p style="font-size: 13px;">Connection failed. <br>Retrying in 10s... </p>
+                <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
+                <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
+            `;
             showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
             isPaused = true; // 再びロック
             // 10秒待ってから saveResult をもう一度実行
-            startRetryTimer(() => saveResult(time, err)); 
+            startRetryTimer(() => handleCheckNames()); 
         } else {
             // --- 【諦めモード】 3回全部失敗したとき ---
             loginRetryCount = 0; // 次回のためにリセット

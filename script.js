@@ -237,7 +237,7 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
         }
 // +++++++++++++++++++
         // ゲーム開始の準備
-       document.getElementById('setup-screen').style.display = 'none'; // 設定画面を隠す
+        document.getElementById('setup-screen').style.display = 'none'; // 設定画面を隠す
         startGameLogic(); // 実際のゲーム開始処理（セル生成など）を別関数に切り出すと綺麗です
 
     } catch (e) {
@@ -268,6 +268,7 @@ async function initGame() {     // ***** ゲーム開始時の処理を修正
                 <p>Sorry, we couldn't connect to the server.</p>
                 <p style="font-size: 13px;">This session will NOT be recorded.<br>You can play, but cannot join the ranking.</p>
                 <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
+                <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             
             // モーダルを表示（OKを押すとゲームが始まるようにする）
@@ -812,20 +813,55 @@ async function handleCheckNames() {
     listArea.style.display = "block";
 
     const params = new URLSearchParams({ action: "getRanking", type: "school", school: school });
-    const response = await fetch(`${GAS_URL}?${params.toString()}`);
-    const data = await response.json();
+    try{
+        const response = await fetch(`${GAS_URL}?${params.toString()}`);
+        const data = await response.json();
 
-    // 学年で絞り込み、名前をアルファベット順に
-    const names = data
-        .filter(item => String(item.grade) === String(grade))
-        .map(item => item.name);
-    
-    const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b.name));
+        // 学年で絞り込み、名前をアルファベット順に
+        const names = data
+            .filter(item => String(item.grade) === String(grade))
+            .map(item => item.name);
+        
+        const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b.name));
 
-    if (uniqueNames.length > 0) {
-        listArea.innerHTML = `<strong>Registered: ${school} ${grade}</strong><br> ${uniqueNames.join(", ")}`;
-    } else {
-        listArea.innerHTML = `No names registered for ${school} ${grade} yet.`;
+        if (uniqueNames.length > 0) {
+            listArea.innerHTML = `<strong>Registered: ${school} ${grade}</strong><br> ${uniqueNames.join(", ")}`;
+        } else {
+            listArea.innerHTML = `No names registered for ${school} ${grade} yet.`;
+        }
+        loginRetryCount = 0;        // 12 Feb
+
+    } catch (e) {
+        loginRetryCount++; // 失敗したので回数を1増やす(12Feb)
+
+        if (loginRetryCount < 3) {
+            // --- 【再試行モード】 1回目、2回目の失敗 ---
+            // --- 【再試行モード】 ---
+            // isPausedをチェックせずに強制的にメッセージを書き換える
+            // showModalの冒頭に if(isPaused) があるなら、一時的にfalseにする
+            const p = isPaused;
+            isPaused = false; 
+            showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
+            isPaused = true; // 再びロック
+            // 10秒待ってから saveResult をもう一度実行
+            startRetryTimer(() => saveResult(time, err)); 
+        } else {
+            // --- 【諦めモード】 3回全部失敗したとき ---
+            loginRetryCount = 0; // 次回のためにリセット
+            const warningMsg = `
+                <div style="color: #d9534f; font-weight: bold;">OFFLINE MODE</div>
+                <p>Sorry, we couldn't connect to the server.</p>
+                <p style="font-size: 13px;">This session will NOT be recorded.<br>You can play, but cannot join the ranking.</p>
+                <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
+                <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
+            `;
+            
+            // モーダルを表示（OKを押すとゲームが始まるようにする）
+            showModal(warningMsg);
+            
+            // ※ここでは自動で startGameLogic() を呼ばず、
+            // 子供が上のOKボタンを押した時に始まるようにしています。
+        }
     }
 };
 

@@ -513,6 +513,7 @@ async function saveResult(time, err) {
         // 成功したら隠す
         document.getElementById('retry-container').style.display = 'none';  //12Feb
     } catch (e) {
+        isPaused = true;
         if (timerInterval) clearInterval(timerInterval);    // stop timer
         document.getElementById('modal-buttons').innerHTML = '';    //delete buttons
         isClear = false;
@@ -567,6 +568,7 @@ async function saveResult(time, err) {
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {
+    if (msgArea.innerHTML.includes("Attempt")) return;
     // if (isPaused) return; // 二重実行防止 通信障害の際はmodalの上にmodal
     // isPaused = true;
     // pausedStartTime = Date.now(); // ★追加：止めた瞬間を記録

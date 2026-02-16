@@ -568,7 +568,6 @@ async function saveResult(time, err) {
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
 function showModal(message, isClear = false) {
-    if (msgArea.innerHTML.includes("Attempt")) return;
     // if (isPaused) return; // 二重実行防止 通信障害の際はmodalの上にmodal
     // isPaused = true;
     // pausedStartTime = Date.now(); // ★追加：止めた瞬間を記録
@@ -582,7 +581,7 @@ function showModal(message, isClear = false) {
     const msgArea = document.getElementById('modal-message');
     const btnArea = document.getElementById('modal-buttons');
     const rankingArea = document.getElementById('ranking-area');
-
+    if (msgArea.innerHTML.includes("Attempt")) return;
     // CSSの display:none を打ち消すために flex を指定
     modal.style.display = 'flex'; 
 //    msgArea.innerText = message;

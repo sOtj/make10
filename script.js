@@ -77,7 +77,6 @@ const schoolMaster = [
 ];
 
 
-// const helpMessage = `
 const helpMsgReg = `
     <div style="text-align: center; font-size: 14px; line-height: 1.4;">
         <h3 style="margin-bottom: 10px;">How To Register</h3>
@@ -521,7 +520,6 @@ async function saveResult(time, err) {
 
         if (loginRetryCount < 3) {
             // --- 【再試行モード】 1回目、2回目の失敗 ---
-            // --- 【再試行モード】 ---
             // isPausedをチェックせずに強制的にメッセージを書き換える
             // showModalの冒頭に if(isPaused) があるなら、一時的にfalseにする
             const p = isPaused;
@@ -541,10 +539,8 @@ async function saveResult(time, err) {
         } else {
             // --- 【諦めモード】 3回全部失敗したとき ---
             loginRetryCount = 0; // 次回のためにリセット
-            
             // 1年生にも伝わるよう、OFFLINE表示とメッセージを出す
             // document.getElementById('best-time').innerText = "OFFLINE";
-            
             const warningMsg = `
                 <div style="color: #d9534f; font-weight: bold;">OFFLINE MODE</div>
                 <p>Sorry, we couldn't connect to the server.</p>
@@ -552,7 +548,6 @@ async function saveResult(time, err) {
                 <button class="action-btn" onclick="closeModal(); startGameLogic();">OK (Start Game)</button>
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
-            
             // モーダルを表示（OKを押すとゲームが始まるようにする）
             showModal(warningMsg);
             
@@ -598,8 +593,8 @@ function showModal(message, isClear = false) {
             <button class="action-btn" onclick="restartGame()">Try Again</button>
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
-    } else if (message.includes('button')) {
-        btnArea.innerHTML='';   // 通常のエラー時はOKボタンだけ表示
+    // } else if (message.includes('button')) {
+    //     btnArea.innerHTML='';   // 通常のエラー時はOKボタンだけ表示
     } else {            // 通常のエラー時はOKボタンだけ表示
         btnArea.innerHTML = `<button class="action-btn secondary" onclick="closeModal()">OK</button>`;
     }

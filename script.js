@@ -593,8 +593,8 @@ function showModal(message, isClear = false) {
             <button class="action-btn" onclick="restartGame()">Try Again</button>
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
-    // } else if (message.includes('button')) {
-    //     btnArea.innerHTML='';   // 通常のエラー時はOKボタンだけ表示
+    } else if (customButtons) {
+        btnArea.innerHTML=customButtons;   // 通常のエラー時はOKボタンだけ表示
     } else {            // 通常のエラー時はOKボタンだけ表示
         btnArea.innerHTML = `<button class="action-btn secondary" onclick="closeModal()">OK</button>`;
     }
@@ -815,19 +815,26 @@ async function handleCheckNames() {
     listArea.innerHTML = "Loading...";
     listArea.style.display = "block";
 
-    const params = new URLSearchParams({ action: "getRanking", type: "school", school: school });
+    const params = new URLSearchParams({ 
+                    // action: "getRanking", 
+                    // type: "school", 
+                    action: "getUserList",
+                    school: school,
+                    grade: grade
+    });
     try{
         const response = await fetch(`${GAS_URL}?${params.toString()}`);
-        const data = await response.json();
+        // const data = await response.json();
 
-        // 学年で絞り込み、名前をアルファベット順に
-        const names = data
-            .filter(item => String(item.grade) === String(grade))
-            .map(item => item.name);
+        // // 学年で絞り込み、名前をアルファベット順に
+        // const names = data
+        //     .filter(item => String(item.grade) === String(grade))
+        //     .map(item => item.name);
         
-        const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b.name));
+        // // const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b.name));
+        // const uniqueNames = [...new Set(names)].sort((a, b) => a.localeCompare(b));
 
-        if (uniqueNames.length > 0) {
+        if (uniqueNames.length > 0) {   // GAS側ですでに「重複なし・ソート済み」の配列が届く
             listArea.innerHTML = `<strong>Registered: ${school} ${grade}</strong><br> ${uniqueNames.join(", ")}`;
         } else {
             listArea.innerHTML = `No names registered for ${school} ${grade} yet.`;
@@ -839,7 +846,6 @@ async function handleCheckNames() {
 
         if (loginRetryCount < 3) {
             // --- 【再試行モード】 1回目、2回目の失敗 ---
-            // --- 【再試行モード】 ---
             // isPausedをチェックせずに強制的にメッセージを書き換える
             // showModalの冒頭に if(isPaused) があるなら、一時的にfalseにする
             const p = isPaused;
@@ -868,8 +874,6 @@ async function handleCheckNames() {
             // モーダルを表示（OKを押すとゲームが始まるようにする）
             showModal(warningMsg);
             
-            // ※ここでは自動で startGameLogic() を呼ばず、
-            // 子供が上のOKボタンを押した時に始まるようにしています。
         }
     }
 };

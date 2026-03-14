@@ -593,8 +593,8 @@ function showModal(message, isClear = false) {
             <button class="action-btn" onclick="restartGame()">Try Again</button>
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
-    } else if (customButtons) {
-        btnArea.innerHTML=customButtons;   // 通常のエラー時はOKボタンだけ表示
+    // } else if (customButtons) {
+    //     btnArea.innerHTML=customButtons;   // 通常のエラー時はOKボタンだけ表示
     } else {            // 通常のエラー時はOKボタンだけ表示
         btnArea.innerHTML = `<button class="action-btn secondary" onclick="closeModal()">OK</button>`;
     }

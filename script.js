@@ -549,12 +549,14 @@ async function saveResult(time, err) {
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             // モーダルを表示（OKを押すとゲームが始まるようにする）
-            // showModal(warningMsg);
+            // showModal(warningMsg); 
+            // ↓↓↓14Mar2026
             const buttons = `
                 <button class="action-btn" onclick="closeModal(); startGameLogic();">Continue</button>
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
-            showModal(warningMsg, false, buttons);            
+            showModal(warningMsg, false, buttons);
+            // ↑↑↑14Mar2026         
             // ※ここでは自動で startGameLogic() を呼ばず、
             // 子供が上のOKボタンを押した時に始まるようにしています。
         }

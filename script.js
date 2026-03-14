@@ -530,7 +530,7 @@ async function saveResult(time, err) {
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             // モーダルを表示（OKを押すとゲームが始まるようにする）
-            showModal(warningMsgTry);
+            showModal(warningMsgTry,false,);
             // showModal(`Connection failed. <br>Retrying in 10s... (Attempt ${loginRetryCount}/3)`);
             isPaused = true; // 再びロック
             // 10秒待ってから saveResult をもう一度実行
@@ -549,8 +549,12 @@ async function saveResult(time, err) {
                 <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
             `;
             // モーダルを表示（OKを押すとゲームが始まるようにする）
-            showModal(warningMsg);
-            
+            // showModal(warningMsg);
+            const buttons = `
+                <button class="action-btn" onclick="closeModal(); startGameLogic();">Continue</button>
+                <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
+            `;
+            showModal(warningMsg, false, buttons);            
             // ※ここでは自動で startGameLogic() を呼ばず、
             // 子供が上のOKボタンを押した時に始まるようにしています。
         }
@@ -562,7 +566,7 @@ async function saveResult(time, err) {
 }
 
 // |||||||||||||||||||||||||||||  added 31 Jan  |||||||||||||||||||
-function showModal(message, isClear = false) {
+function showModal(message, isClear = false, customButtons = null) {
     // if (isPaused) return; // 二重実行防止 通信障害の際はmodalの上にmodal
     // isPaused = true;
     // pausedStartTime = Date.now(); // ★追加：止めた瞬間を記録
@@ -593,8 +597,8 @@ function showModal(message, isClear = false) {
             <button class="action-btn" onclick="restartGame()">Try Again</button>
             <button class="action-btn secondary" onclick="backToSetup()">Quit</button>
         `;
-    // } else if (customButtons) {
-    //     btnArea.innerHTML=customButtons;   // 通常のエラー時はOKボタンだけ表示
+    } else if (customButtons) { // もし第3引数でボタンのHTMLが渡されたら
+        btnArea.innerHTML=customButtons;   // それを使う
     } else {            // 通常のエラー時はOKボタンだけ表示
         btnArea.innerHTML = `<button class="action-btn secondary" onclick="closeModal()">OK</button>`;
     }
